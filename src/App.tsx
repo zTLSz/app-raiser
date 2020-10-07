@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import LoginPage from './components/Login'
+import MainPage from './components/Main'
+import RegPage from './components/Reg'
+import ProtectedRoute from './containers/ProtectedRoute'
+import { Route, Switch } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+
+
+
+
+const App: React.FC = () => (
+  <Switch>
+    <Route path="/login" component={LoginPage} />
+    <Route path="/reg" component={RegPage} />
+     <ProtectedRoute
+        exact={true}
+        path="/"
+        Component={MainPage}
+        isAuthenticated={false}
+        isVerifying={false}
+      />
+  </Switch>
+);
 
 export default App;
