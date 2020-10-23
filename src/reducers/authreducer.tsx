@@ -36,6 +36,7 @@ export function authReducer(state = initialState, action: any) {
             ...state,
             isLoggingIn: false,
             isAuthenticated: true,
+            isVerifying: false,
             user: action.user
         };
     case LOGIN_FAILURE:
@@ -56,6 +57,7 @@ export function authReducer(state = initialState, action: any) {
             ...state,
             isLoggingOut: false,
             isAuthenticated: false,
+            isVerifying: false,
             user: {}
         };
     case LOGOUT_FAILURE:

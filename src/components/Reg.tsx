@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { keyframes } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, Link } from "react-router-dom";
 import { requestReg } from '../actions/reg'
-// import { loginUser } from '../actions/auth';
 import { Form, Input, Checkbox, Button, Typography, Row, Col } from 'antd';
-// import { QuestionCircleOutlined } from '@ant-design/icons';
 import bg from '../images/bglog.jpg'
-import { RootState } from '../reducers/index'
 
 const { Text } = Typography;
 const { Title } = Typography;
@@ -116,9 +113,7 @@ const LoginError = styled.div`
   }
 `
 
-interface RegPageTypes {
-    isAuthenticated: boolean
-}
+
 
 interface RegTypes {
   reg: RegStateTypes
@@ -131,20 +126,25 @@ interface RegStateTypes {
   errorCode?: string
 }
 
+interface AuthTypes {
+  auth: {
+    isAuthenticated: boolean
+  }
+}
 
 
-const RegPage: React.FC<RegPageTypes> = ({ isAuthenticated }) => {
+
+const RegPage: React.FC = () => {
     const [mail, setMail] = useState<string>('');
     const [pass, setPass] = useState<string>('');
     const dispatch = useDispatch();
     const regState = useSelector(( state: RegTypes ) => state.reg)
-
-    function submitUser(e: React.FormEvent<HTMLInputElement>) {
-      e.preventDefault();
-    }
+    const authState = useSelector(( state: AuthTypes ) => state.auth.isAuthenticated)
 
 
-    if (isAuthenticated) {
+
+
+    if (authState) {
       return (
         <Redirect to="/" />
       )

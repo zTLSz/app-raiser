@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { keyframes } from 'styled-components';
-import { connect } from 'react-redux';
 import { Redirect, Link } from "react-router-dom";
 // import { loginUser } from '../actions/auth';
 import { Form, Input, Checkbox, Button, Typography, Row, Col } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux'
+import { requestLogin } from '../actions/auth'
 import bg from '../images/bglog.jpg'
 
 
@@ -104,26 +105,24 @@ const LoginError = styled.div`
   bottom: -80px;
 `
 
-interface LoginPageTypes {
-    loginUser: any,
-    loginError: any, 
-    isAuthenticated: boolean
-}
   
 
+interface AuthTypes {
+  auth: {
+    isAuthenticated: boolean
+  }
+}
+
+const LoginPage: React.FC = () => {
+    const [log, setLog] = useState<string>('');
+    const [pass, setPass] = useState<string>('');
+    const dispatch = useDispatch();
+    const authState = useSelector(( state: AuthTypes ) => state.auth.isAuthenticated)
 
 
-const LoginPage: React.FC<LoginPageTypes> = ({ loginUser, loginError, isAuthenticated }) => {
-    const [log, setLog] = useState<String>('');
-    const [pass, setPass] = useState<String>('');
-    // const { loginUser, loginError, isAuthenticated } = props;
-
-    function submitUser(e: React.FormEvent<HTMLInputElement>) {
-      e.preventDefault();
-    }
 
 
-    if (isAuthenticated) {
+    if (authState) {
       return (
         <Redirect to="/" />
       )
@@ -162,7 +161,7 @@ const LoginPage: React.FC<LoginPageTypes> = ({ loginUser, loginError, isAuthenti
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary">
+                    <Button type="primary" onClick={() => dispatch(requestLogin(log, pass))}>
                         Войти
                     </Button>
                     <Link to='/reg'>

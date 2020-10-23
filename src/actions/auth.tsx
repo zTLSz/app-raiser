@@ -13,59 +13,59 @@ export const VERIFY_FAILURE = "VERIFY_FAILURE";
 
 
 
-const requestLogin = (email: string, password: string) => {
+export const requestLogin = (email: string, password: string) => {
   return {
     type: LOGIN_REQUEST,
     payload: { e: email, p: password }
   };
 };
 
-const receiveLogin = (user: any) => {
+export const receiveLogin = (user: any) => {
   return {
     type: LOGIN_SUCCESS,
     user
   };
 };
 
-const loginError = (error: { code: string, message: string, a: null }) => {
+export const loginError = (error: { code: string, message: string, a: null }) => {
   return {
     type: LOGIN_FAILURE,
     payload: error.code
   };
 };
 
-const requestLogout = () => {
+export const requestLogout = () => {
   return {
     type: LOGOUT_REQUEST
   };
 };
 
-const receiveLogout = () => {
+export const receiveLogout = () => {
   return {
     type: LOGOUT_SUCCESS
   };
 };
 
-const logoutError = (error: { code: string, message: string, a: null }) => {
+export const logoutError = (error: { code: string, message: string, a: null }) => {
   return {
     type: LOGOUT_FAILURE,
     payload: error.code
   };
 };
 
-const verifyRequest = () => {
+export const verifyRequest = () => {
   return {
     type: VERIFY_REQUEST
   };
 };
 
-const verifySuccess = () => {
+export const verifySuccess = () => {
   return {
     type: VERIFY_SUCCESS
   };
 };
 
-const verifyError = (error: { code: string, message: string, a: null }) => {
+export const verifyError = (error: { code: string, message: string, a: null }) => {
     return {
       type: VERIFY_FAILURE,
       payload: error.code
@@ -109,25 +109,30 @@ async function fetchLogout() {
 
 // verify
 
+function onAuthStateChanged() {
+  return new Promise((resolve, reject) => {
+    myFirebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        resolve(user);
+      } else {
+        reject(new Error('Ops!'));
+      }
+    });
+  });
+}
+
 
 export function* sagaVerifyWorker(action: {payload: {e: string, p: string}, type: string}) {
     try {
-      const payload = yield call(() => fetchVerify())
-      // yield put(receiveLogout())
+      const user = yield call(onAuthStateChanged)
+      yield put(receiveLogin(user))
     } catch (e) {
       yield put(verifyError(e))
     }
 }
 
 async function fetchVerify() {
-    const response = await myFirebase.auth().onAuthStateChanged(user => {
-        
-        if (user !== null) {
-          put(receiveLogin(user));
-        } 
-        
-        put(verifySuccess());
-      });
+    const response = await myFirebase.auth()
     return response
 }
 

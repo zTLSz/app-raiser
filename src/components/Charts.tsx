@@ -4,24 +4,23 @@ import { useDispatch } from 'react-redux'
 import { requestLogout } from '../actions/auth'
 import TopMenu from './TopMenu/TopmenuWrap'
 
-interface MainPageTypes {
+interface ChartsPageTypes {
 
 }
 
-const MainPage: React.FC<MainPageTypes> = () => {
+const ChartsPage: React.FC<ChartsPageTypes> = () => {
 
     const dispatch = useDispatch();
 
 
     return (
         <div>
-            <TopMenu activeEl={'main'}/>
-            <button onClick={() => dispatch(requestLogout())}>
-                Logout
-            </button>
+            <TopMenu activeEl={'charts'}/>
+
+                Здесь будет страница чартов
         </div>
     )
 }
 
 
-export default MainPage
+export default ChartsPage
