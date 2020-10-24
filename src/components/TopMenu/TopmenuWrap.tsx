@@ -1,12 +1,28 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import styled, {createGlobalStyle} from 'styled-components';
 import 'antd/dist/antd.css';
 import { Menu } from 'antd';
-import { MailOutlined, AppstoreOutlined, SettingOutlined, ProfileFilled } from '@ant-design/icons';
+import { useDispatch } from 'react-redux'
+import { LogoutOutlined, AppstoreOutlined, EditOutlined, ProfileFilled } from '@ant-design/icons';
+import { requestLogout } from '../../actions/auth'
 import { Link } from 'react-router-dom'
 
 
 const { SubMenu } = Menu;
+
+
+const MenuWrap =  styled.menu`
+  .menu-item__right {
+    float: right;
+  }
+`
+
+const GlobalMenuStyle = createGlobalStyle`
+  menu {
+    margin: 0;
+    padding: 0;
+  }
+`
 
 interface TopMenuTypes {
   activeEl: string
@@ -15,14 +31,16 @@ interface TopMenuTypes {
 
 const TopMenu: React.FC<TopMenuTypes> = ({ activeEl }) => {
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
 
     return (
-        <Menu theme={'dark'} defaultSelectedKeys={[activeEl]} mode="horizontal">
+      <MenuWrap>
+        <GlobalMenuStyle />
+        <Menu theme={'dark'} className={"test"} defaultSelectedKeys={[activeEl]} mode="horizontal">
           <Menu.Item key="main" icon={<ProfileFilled />}>
             <Link to="/">
-              Профиль
+              Главная
             </Link>
           </Menu.Item>
           <Menu.Item key="charts"  icon={<AppstoreOutlined />}>
@@ -30,6 +48,23 @@ const TopMenu: React.FC<TopMenuTypes> = ({ activeEl }) => {
               Чарты
             </Link>
           </Menu.Item>
+          <Menu.Item key="editprofile"  icon={<EditOutlined />}>
+            <Link to="/editprofile">
+              Редактировать профиль
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="logout" className="menu-item__right" icon={<LogoutOutlined />} onClick={() => dispatch(requestLogout())}>
+              Выход
+          </Menu.Item>
+      </Menu>
+    </MenuWrap>
+    )
+}
+
+
+
+/*
+
           <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Navigation Three - Submenu">
             <Menu.ItemGroup title="Item 1">
               <Menu.Item key="setting:1">Option 1</Menu.Item>
@@ -40,8 +75,7 @@ const TopMenu: React.FC<TopMenuTypes> = ({ activeEl }) => {
               <Menu.Item key="setting:4">Option 4</Menu.Item>
             </Menu.ItemGroup>
           </SubMenu>
-      </Menu>
-    )
-}
+
+*/
 
 export default TopMenu

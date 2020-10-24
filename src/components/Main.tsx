@@ -16,9 +16,7 @@ const MainPage: React.FC<MainPageTypes> = () => {
     return (
         <div>
             <TopMenu activeEl={'main'}/>
-            <button onClick={() => dispatch(requestLogout())}>
-                Logout
-            </button>
+            Главная страница!
         </div>
     )
 }

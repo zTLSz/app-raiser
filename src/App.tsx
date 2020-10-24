@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import LoginPage from './components/Login'
 import MainPage from './components/Main'
 import RegPage from './components/Reg'
+import EditProfilePage from './components/EditProfile'
 import ChartsPage from './components/Charts'
 import Preloader from './components/Preloader'
 import ProtectedRoute from './containers/ProtectedRoute'
@@ -53,6 +54,13 @@ const App: React.FC = () => {
             exact
             path="/charts"
             Component={ChartsPage}
+            isAuthenticated={authState}
+            isVerifying={verifyState}
+          />
+          <ProtectedRoute
+            exact
+            path="/editprofile"
+            Component={EditProfilePage}
             isAuthenticated={authState}
             isVerifying={verifyState}
           />

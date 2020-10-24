@@ -135,6 +135,7 @@ interface AuthTypes {
 
 
 const RegPage: React.FC = () => {
+    const [login, setLogin] = useState<string>('');
     const [mail, setMail] = useState<string>('');
     const [pass, setPass] = useState<string>('');
     const dispatch = useDispatch();
@@ -168,12 +169,18 @@ const RegPage: React.FC = () => {
                 <Title>Регистрация</Title>
                 <Form.Item
                     label="Email"
-                    name="username"
+                    name="email"
                     rules={[{ required: true, message: 'Введите почту!' }]}
                 >
                     <Input onChange={(e) => setMail(e.target.value)}/>
                 </Form.Item>
-
+                <Form.Item
+                    label="Login"
+                    name="login"
+                    rules={[{ required: true, message: 'Введите имя пользователя!' }]}
+                >
+                    <Input onChange={(e) => setLogin(e.target.value)}/>
+                </Form.Item>
                 <Form.Item
                     label="Пароль"
                     name="password"
@@ -183,7 +190,7 @@ const RegPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" onClick={() => dispatch(requestReg(mail, pass))}>
+                    <Button type="primary" onClick={() => dispatch(requestReg(mail, pass, login))}>
                         Зарегистрироваться
                     </Button>
                     <Link to='/login'>

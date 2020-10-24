@@ -1,4 +1,4 @@
-import { myFirebase } from "../firebase/firebase";
+import { myFirebase, db } from "../firebase/firebase";
 import { put, call } from 'redux-saga/effects'
 
 
@@ -11,10 +11,13 @@ export const SHOW_LOADER = "SHOW_LOADER";
 export const HIDE_LOADER = "HIDE_LOADER";
 
 
-export const requestReg = (email: string, password: string) => {
+
+
+
+export const requestReg = (email: string, password: string, login: string) => {
   return {
     type: REG_REQUEST,
-    payload: { e: email, p: password }
+    payload: { e: email, p: password, l: login }
   };
 };
 
@@ -42,9 +45,10 @@ export const redirectReg = () => {
 
 
 
-export function* sagaRegWorker(action: {payload: {e: string, p: string}, type: string}) {
+export function* sagaRegWorker(action: {payload: {e: string, p: string, l: string}, type: string}) {
     try {
       const payload = yield call(() => fetchReg(action.payload.e, action.payload.p))
+      yield call(() => addDbData(action.payload.l))
       yield put(receiveReg(payload))
     } catch (e) {
       yield put(regError(e))
@@ -56,51 +60,8 @@ async function fetchReg(e: string, p: string) {
     return response
 }
 
-
-
-/*
-export function regUser(email, password) { 
-  return dispatch => {
-    dispatch(requestReg());
-    myFirebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        dispatch(receiveReg());
-        const userId = myFirebase.auth().currentUser.uid;
-        baseDb.ref('users/' + userId).set({
-          name: 'anonim',
-          regdate: Date.now(),
-          avatar: '',
-          isAdmin: false,
-          albumsrated: '',
-          albumswaitingfor: '',
-          friends: '',
-          lists: '',
-          rating: '',
-        }).then(res => {
-
-          baseDb.ref('profiles/amount').once('value').then(function(snapshot) {
-            const newUserObj = snapshot.val();
-            const newUserId = newUserObj.users + 1;
-            
-            baseDb.ref('profiles/amount').update({
-              users: newUserId
-            })
-
-            baseDb.ref('profiles/users/' + newUserId).set({
-              user: newUserId,
-              id: userId
-            })
-            
-
-          });
-
-        })
-      })
-      .catch(error => {
-        dispatch(regError());
-      }); 
-  }
-};
-*/
+async function addDbData(login: string) {
+  const response = await db.collection("users").doc(login).set({
+    test: '111'
+  })
+}
