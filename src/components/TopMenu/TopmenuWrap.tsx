@@ -53,7 +53,10 @@ const TopMenu: React.FC<TopMenuTypes> = ({ activeEl }) => {
               Редактировать профиль
             </Link>
           </Menu.Item>
-          <Menu.Item key="logout" className="menu-item__right" icon={<LogoutOutlined />} onClick={() => dispatch(requestLogout())}>
+          <Menu.Item key="logout" 
+              className="menu-item__right" 
+              icon={<LogoutOutlined />} 
+              onClick={() => dispatch(requestLogout())}>
               Выход
           </Menu.Item>
       </Menu>

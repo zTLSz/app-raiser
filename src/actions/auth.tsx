@@ -1,4 +1,4 @@
-import { myFirebase } from "../firebase/firebase";
+import { myFirebase, db } from "../firebase/firebase";
 import { put, call } from 'redux-saga/effects'
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -20,7 +20,7 @@ export const requestLogin = (email: string, password: string) => {
   };
 };
 
-export const receiveLogin = (user: any) => {
+export const receiveLogin = (user: any, usercounter: number, userinfo: any) => {
   return {
     type: LOGIN_SUCCESS,
     user
@@ -74,11 +74,15 @@ export const verifyError = (error: { code: string, message: string, a: null }) =
 
 
 // login
+// payload.user.uid
 
 export function* sagaLoginWorker(action: {payload: {e: string, p: string}, type: string}) {
     try {
       const payload = yield call(() => fetchAuth(action.payload.e, action.payload.p))
-      yield put(receiveLogin(payload))
+      const usersystemdata = yield call(() => getCurrentUserCount(payload.user.uid))
+      const userinfo = yield call(() => getCurrentUserInfo(usersystemdata.usercounter))
+
+      yield put(receiveLogin(payload, usersystemdata.usercounter, userinfo))
     } catch (e) {
       yield put(loginError(e))
     }
@@ -86,9 +90,28 @@ export function* sagaLoginWorker(action: {payload: {e: string, p: string}, type:
 
 async function fetchAuth(e: string, p: string) {
     const response = await myFirebase.auth().signInWithEmailAndPassword(e, p)
-    console.log(response)
+    // console.log(response)
     return response
 }
+
+async function getCurrentUserCount(uid: string) {
+  console.log(uid)
+  const response = await db.collection("usersystemdata").doc(uid).get()
+  if (response.exists) {
+    return response.data()
+  }
+  throw new Error("error!")
+}
+
+async function getCurrentUserInfo(usercounter: number) {
+  const response = await db.collection("userinfo").doc(`${usercounter}`).get()
+  if (response.exists) {
+    return response.data()
+  }
+  throw new Error("error!")
+}
+
+
 
 // logout
 
@@ -125,20 +148,25 @@ function onAuthStateChanged() {
 
 export function* sagaVerifyWorker(action: {payload: {e: string, p: string}, type: string}) {
     try {
-      const user = yield call(onAuthStateChanged)
-      yield put(receiveLogin(user))
+      const payload = yield call(onAuthStateChanged)
+      const usersystemdata = yield call(() => getCurrentUserCount(payload.uid))
+      const userinfo = yield call(() => getCurrentUserInfo(usersystemdata.usercounter))
+      
+      yield put(receiveLogin(payload, usersystemdata.usercounter, userinfo))
     } catch (e) {
       yield put(verifyError(e))
     }
 }
 
+
+/*
 async function fetchVerify() {
     const response = await myFirebase.auth()
     return response
 }
 
 
-/*
+
 
 export function loginUser(email: string, password: string) { 
   return dispatch => {

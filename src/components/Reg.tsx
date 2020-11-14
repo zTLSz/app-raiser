@@ -175,13 +175,6 @@ const RegPage: React.FC = () => {
                     <Input onChange={(e) => setMail(e.target.value)}/>
                 </Form.Item>
                 <Form.Item
-                    label="Login"
-                    name="login"
-                    rules={[{ required: true, message: 'Введите имя пользователя!' }]}
-                >
-                    <Input onChange={(e) => setLogin(e.target.value)}/>
-                </Form.Item>
-                <Form.Item
                     label="Пароль"
                     name="password"
                     rules={[{ required: true, message: 'Введите пароль!' }]}
@@ -190,7 +183,7 @@ const RegPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" onClick={() => dispatch(requestReg(mail, pass, login))}>
+                    <Button type="primary" onClick={() => dispatch(requestReg(mail, pass))}>
                         Зарегистрироваться
                     </Button>
                     <Link to='/login'>

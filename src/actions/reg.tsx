@@ -1,5 +1,6 @@
 import { myFirebase, db } from "../firebase/firebase";
 import { put, call } from 'redux-saga/effects'
+import firebase from 'firebase'
 
 
 
@@ -14,10 +15,10 @@ export const HIDE_LOADER = "HIDE_LOADER";
 
 
 
-export const requestReg = (email: string, password: string, login: string) => {
+export const requestReg = (email: string, password: string) => {
   return {
     type: REG_REQUEST,
-    payload: { e: email, p: password, l: login }
+    payload: { e: email, p: password }
   };
 };
 
@@ -45,14 +46,22 @@ export const redirectReg = () => {
 
 
 
-export function* sagaRegWorker(action: {payload: {e: string, p: string, l: string}, type: string}) {
+export function* sagaRegWorker(action: {payload: {e: string, p: string}, type: string}) {
     try {
       const payload = yield call(() => fetchReg(action.payload.e, action.payload.p))
-      yield call(() => addDbData(action.payload.l))
+      const usercounter = yield call(() => checkUserCount())
+      yield call(() => addUserInfo(action.payload.e, usercounter))
+      yield call(() => addUserSystemData(payload.user.uid, action.payload.e, usercounter))
       yield put(receiveReg(payload))
     } catch (e) {
       yield put(regError(e))
     }
+}
+
+
+async function checkUserCount() {
+  const qSnap = await db.collection("usersystemdata").get()
+  return qSnap.size
 }
 
 async function fetchReg(e: string, p: string) {
@@ -60,8 +69,24 @@ async function fetchReg(e: string, p: string) {
     return response
 }
 
-async function addDbData(login: string) {
-  const response = await db.collection("users").doc(login).set({
-    test: '111'
+async function addUserInfo(email: string, usercounter: number) {
+  const response = await db.collection("userinfo").doc(`${usercounter}`).set({
+    about: '',
+    age: 0,
+    avatar: null,
+    color: "#000000",
+    email: email,
+    followers: 0,
+    following: 0,
+    isAdmin: false,
+    nickname: 'anonim',
+    regdate: firebase.firestore.Timestamp.fromDate(new Date())
   })
+}
+
+async function addUserSystemData(uid: string, email: string, usercounter: any) {
+  const response = await db.collection("usersystemdata").doc(uid).set({
+      email: email,
+      usercounter: usercounter
+  }) 
 }

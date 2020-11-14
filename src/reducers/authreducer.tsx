@@ -18,7 +18,9 @@ const initialState = {
     loginError: false,
     logoutError: false,
     isAuthenticated: false,
-    user: {}
+    user: {},
+    counter: 0,
+    info: {}
 }
 
     
@@ -58,7 +60,9 @@ export function authReducer(state = initialState, action: any) {
             isLoggingOut: false,
             isAuthenticated: false,
             isVerifying: false,
-            user: {}
+            user: {},
+            counter: 0,
+            info: {}
         };
     case LOGOUT_FAILURE:
       return {
