@@ -11,6 +11,32 @@ import {
   } from "../actions/auth";
 
 
+export interface AuthTypes {
+    isLoggingIn: boolean,
+    isLoggingOut: boolean,
+    isVerifying: boolean,
+    loginError: boolean,
+    logoutError: boolean,
+    isAuthenticated: boolean,
+    user: any,
+    counter: number,
+    info: InfoTypes
+}
+
+export interface InfoTypes {
+    about: string,
+    age: number,
+    avatar: null|string,
+    color: string,
+    email: string,
+    followers: number,
+    following: number,
+    isAdmin: boolean,
+    nickname: string,
+    regdate: any
+}
+
+
 const initialState = {
     isLoggingIn: false,
     isLoggingOut: false,
@@ -39,7 +65,9 @@ export function authReducer(state = initialState, action: any) {
             isLoggingIn: false,
             isAuthenticated: true,
             isVerifying: false,
-            user: action.user
+            user: action.user,
+            counter: action.usercounter,
+            info: action.userinfo
         };
     case LOGIN_FAILURE:
       return {

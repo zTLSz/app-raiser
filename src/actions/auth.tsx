@@ -23,7 +23,9 @@ export const requestLogin = (email: string, password: string) => {
 export const receiveLogin = (user: any, usercounter: number, userinfo: any) => {
   return {
     type: LOGIN_SUCCESS,
-    user
+    user,
+    usercounter,
+    userinfo
   };
 };
 
@@ -95,8 +97,8 @@ async function fetchAuth(e: string, p: string) {
 }
 
 async function getCurrentUserCount(uid: string) {
-  console.log(uid)
   const response = await db.collection("usersystemdata").doc(uid).get()
+
   if (response.exists) {
     return response.data()
   }
@@ -105,6 +107,7 @@ async function getCurrentUserCount(uid: string) {
 
 async function getCurrentUserInfo(usercounter: number) {
   const response = await db.collection("userinfo").doc(`${usercounter}`).get()
+  
   if (response.exists) {
     return response.data()
   }
@@ -151,7 +154,7 @@ export function* sagaVerifyWorker(action: {payload: {e: string, p: string}, type
       const payload = yield call(onAuthStateChanged)
       const usersystemdata = yield call(() => getCurrentUserCount(payload.uid))
       const userinfo = yield call(() => getCurrentUserInfo(usersystemdata.usercounter))
-      
+
       yield put(receiveLogin(payload, usersystemdata.usercounter, userinfo))
     } catch (e) {
       yield put(verifyError(e))
