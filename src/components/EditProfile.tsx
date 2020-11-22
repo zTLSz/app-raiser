@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux'
-import { requestLogout } from '../actions/auth'
-import TopMenu from './TopMenu/TopmenuWrap'
-import { Typography } from 'antd';
-import { Layout, Row, Col } from 'antd';
-import { Input } from 'antd';
+import { Layout, Row, Col, Typography, Button, Input } from 'antd';
 import { AuthTypes } from '../reducers/authreducer';
+import { UserEditTypes } from '../reducers/editprofilereducer';
+import TopMenu from './TopMenu/TopmenuWrap'
+import { requestEditProfile } from '../actions/editProfile'
 
 
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 const { Content  } = Layout;
 
 const TitleWrap = styled.div`
@@ -18,11 +17,15 @@ const TitleWrap = styled.div`
 `
 
 const EditItem = styled.div`
-
+    margin-bottom: 40px;
 `
 
 const LabelText = styled.div`
     margin-bottom: 10px;
+`
+
+const EditStatus = styled.div`
+    margin-top: 10px;
 `
 
 interface EditProfilePageTypes {
@@ -30,13 +33,16 @@ interface EditProfilePageTypes {
 }
 
 interface AuthState {
-    auth: AuthTypes
+    auth: AuthTypes,
+    editprofile: UserEditTypes
 }
 
 const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const userinfo = useSelector((state: AuthState) => state.auth.info)
+    const usercounter = useSelector((state: AuthState) => state.auth.counter)
+    const editstatus = useSelector((state: AuthState) => state.editprofile)
     const [name, setName] = useState(userinfo.nickname)
 
 
@@ -46,7 +52,6 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
             <Layout style={{ background: 'white', marginTop: '40px' }}>
                 <Content>
                     <Row>
-                        {console.log(name)}
                         <Col xs={{offset: 1, span: 23}} 
                             xl={{offset: 3, span: 18}} 
                             xxl={{offset: 3, span: 18}}>
@@ -69,6 +74,16 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
                                             onChange={(e) => setName(e.target.value)}/>
                                     </label> 
                                 </EditItem>
+                                <Button loading={editstatus.isLoading} 
+                                        type="primary" 
+                                        size="large"
+                                        onClick={() => dispatch(requestEditProfile(name, usercounter))}
+                                    > 
+                                    Сохранить
+                                </Button>
+                                <EditStatus>
+                                    {editstatus.isEdit ? <Text type="success">Успешное изменение профиля!</Text> : ''}
+                                </EditStatus>
                         </Col>
                     </Row>
                 </Content>
