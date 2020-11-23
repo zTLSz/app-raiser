@@ -7,6 +7,7 @@ import { Form, Input, Checkbox, Button, Typography, Row, Col } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux'
 import { requestLogin } from '../actions/auth'
+import { AuthTypes } from '../reducers/authreducer'
 import bg from '../images/bglog.jpg'
 
 
@@ -101,24 +102,28 @@ const LoginError = styled.div`
   animation-duration: 0.5s;
   opacity: 1;
   position: absolute;
-  width: 250px;
-  bottom: -80px;
+  width: 400px;
+  bottom: 45px;
+
+  @media(max-width: 500px) {
+    width: 100%;
+    bottom: 44px;
+    line-height: 13px;
+  }
 `
 
   
 
-interface AuthTypes {
-  auth: {
-    isAuthenticated: boolean
-  }
+interface StateAuthTypes {
+  auth: AuthTypes
 }
 
 const LoginPage: React.FC = () => {
     const [log, setLog] = useState<string>('');
     const [pass, setPass] = useState<string>('');
     const dispatch = useDispatch();
-    const authState = useSelector(( state: AuthTypes ) => state.auth.isAuthenticated)
-
+    const authState = useSelector(( state: StateAuthTypes ) => state.auth.isAuthenticated)
+    const loginState = useSelector(( state: StateAuthTypes ) => state.auth)
 
 
 
@@ -170,6 +175,12 @@ const LoginPage: React.FC = () => {
                       </Button>
                     </Link>
                 </Form.Item>
+                {loginState.loginError ? <LoginError>
+                                          <Text type="danger">
+                                            Произошла ошибка! Проверьте правильность данных.
+                                          </Text>
+                                        </LoginError> : ''}
+                {loginState.isLoggingIn ? <LoginError><Text strong>Загрузка, подождите...</Text></LoginError> : ''}
               </Form>
                 <QuestionCircleOutlined />
               </BgForm>
