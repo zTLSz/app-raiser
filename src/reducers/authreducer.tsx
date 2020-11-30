@@ -10,6 +10,8 @@ import {
     VERIFY_FAILURE
   } from "../actions/auth";
 
+import { USER_EDIT_SUCCESS } from '../actions/editProfile'
+
 
 export interface AuthTypes {
     isLoggingIn: boolean,
@@ -115,6 +117,11 @@ export function authReducer(state = initialState, action: any) {
             isVerifying: false,
             verifyingError: true
         };       
+    case USER_EDIT_SUCCESS: 
+        return {
+            ...state,
+            info: action.userinfo
+        }
 
         default:
             return state;

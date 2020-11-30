@@ -105,7 +105,7 @@ async function getCurrentUserCount(uid: string) {
   throw new Error("error!")
 }
 
-async function getCurrentUserInfo(usercounter: number) {
+export async function getCurrentUserInfo(usercounter: number) {
   const response = await db.collection("userinfo").doc(`${usercounter}`).get()
   
   if (response.exists) {

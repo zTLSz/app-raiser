@@ -43,7 +43,19 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
     const userinfo = useSelector((state: AuthState) => state.auth.info)
     const usercounter = useSelector((state: AuthState) => state.auth.counter)
     const editstatus = useSelector((state: AuthState) => state.editprofile)
+
     const [name, setName] = useState(userinfo.nickname)
+    const [isDisabled, setDisabled] = useState(false)
+
+    const editName = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setName(e.target.value)
+
+        if (name.length < 2) {
+            setDisabled(true)
+        } else {
+            setDisabled(false)
+        }
+    }
 
 
     return (
@@ -71,18 +83,22 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
                                         </LabelText>
                                         <Input placeholder="Введите имя" 
                                             value={name}
-                                            onChange={(e) => setName(e.target.value)}/>
+                                            onChange={(e) => editName(e)}
+                                            maxLength={25}
+                                        />
                                     </label> 
                                 </EditItem>
                                 <Button loading={editstatus.isLoading} 
                                         type="primary" 
                                         size="large"
                                         onClick={() => dispatch(requestEditProfile(name, usercounter))}
+                                        disabled={false}
                                     > 
                                     Сохранить
                                 </Button>
                                 <EditStatus>
                                     {editstatus.isEdit ? <Text type="success">Успешное изменение профиля!</Text> : ''}
+                                    {editstatus.isEditError ? <Text type="danger">Произошла ошибка! Проверь правильность данных</Text> : ''}
                                 </EditStatus>
                         </Col>
                     </Row>
