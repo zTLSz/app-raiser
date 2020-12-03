@@ -1,7 +1,7 @@
 import { myFirebase, db } from "../firebase/firebase";
 import { put, call } from 'redux-saga/effects'
 import { getCurrentUserInfo } from './auth'
-import firebase from 'firebase'
+// import firebase from 'firebase'
 
 export const USER_EDIT_REQUEST = "USER_EDIT_REQUEST";
 export const USER_EDIT_FAILURE = "USER_EDIT_FAILURE";
@@ -32,12 +32,13 @@ export const editProfileError = (error: { code: string, message: string, a: null
 
 
   export function* sagaEditProfileWorker(action: {payload: {nickname: string, usercounter: number}, type: string}) {
+    const { nickname, usercounter } = action.payload
     try {
-      if (action.payload.nickname.length < 3) {
+      if (nickname.length < 3) {
         throw new Error(); 
       }
-      const payload = yield call(() => editUserInfo(action.payload.nickname, action.payload.usercounter))
-      const userinfo = yield call(() => getCurrentUserInfo(action.payload.usercounter))
+      const payload = yield call(() => editUserInfo(nickname, usercounter))
+      const userinfo = yield call(() => getCurrentUserInfo(usercounter))
       yield put(receiveEditProfile(payload, userinfo))
     } catch (e) {
       yield put(editProfileError(e))

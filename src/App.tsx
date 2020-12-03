@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import LoginPage from './components/Login'
+import LoginPage from './components/AuthReg/Login'
 import MainPage from './components/Main'
-import RegPage from './components/Reg'
-import EditProfilePage from './components/EditProfile'
-import ChartsPage from './components/Charts'
+import RegPage from './components/AuthReg/Reg'
+import EditProfilePage from './components/EditProfilePage/EditProfile'
+import ChartsPage from './components/ChartsPage/Charts'
+import ProfilesPage from './components/ProilesPage/Profiles'
 import Preloader from './components/Preloader'
 import ProtectedRoute from './containers/ProtectedRoute'
 import { verifyRequest } from './actions/auth'
@@ -33,8 +34,7 @@ const App: React.FC = () => {
   if (verifyState) {
     return (
       <div>
-      <Preloader />
-      {console.log(verifyState)}
+        <Preloader />
       </div>
     )
   }
@@ -61,6 +61,13 @@ const App: React.FC = () => {
             exact
             path="/editprofile"
             Component={EditProfilePage}
+            isAuthenticated={authState}
+            isVerifying={verifyState}
+          />
+          <ProtectedRoute
+            exact
+            path="/profile/:id"
+            Component={ProfilesPage}
             isAuthenticated={authState}
             isVerifying={verifyState}
           />

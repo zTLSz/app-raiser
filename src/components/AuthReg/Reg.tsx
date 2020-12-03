@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { keyframes } from 'styled-components';
-import { Redirect, Link } from "react-router-dom";
-// import { loginUser } from '../actions/auth';
-import { Form, Input, Checkbox, Button, Typography, Row, Col } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux'
-import { requestLogin } from '../actions/auth'
-import { AuthTypes } from '../reducers/authreducer'
-import bg from '../images/bglog.jpg'
-
+import { Redirect, Link } from "react-router-dom";
+import { requestReg } from '../../actions/reg'
+import { Form, Input, Checkbox, Button, Typography, Row, Col } from 'antd';
+import bg from '../../images/bglog.jpg'
 
 const { Text } = Typography;
 const { Title } = Typography;
@@ -94,6 +90,12 @@ const BgForm = styled.div`
   .ant-btn {
     margin-right: 10px;
   }
+
+  @media(max-width: 500px) {
+    .ant-btn {
+      margin-bottom: 10px;
+    }
+  }
 `
 
 
@@ -103,27 +105,43 @@ const LoginError = styled.div`
   opacity: 1;
   position: absolute;
   width: 400px;
-  bottom: 45px;
+  bottom: 20px;
 
   @media(max-width: 500px) {
-    width: 100%;
-    bottom: 44px;
-    line-height: 13px;
+    width: 200px;
+    bottom: 8px;
   }
 `
 
-  
 
-interface StateAuthTypes {
-  auth: AuthTypes
+
+interface RegTypes {
+  reg: RegStateTypes
+}  
+
+interface RegStateTypes {
+  isReg: boolean,
+  isRegError: boolean, 
+  isLoading: boolean,
+  errorCode?: string
 }
 
-const LoginPage: React.FC = () => {
-    const [log, setLog] = useState<string>('');
+interface AuthTypes {
+  auth: {
+    isAuthenticated: boolean
+  }
+}
+
+
+
+const RegPage: React.FC = () => {
+    const [login, setLogin] = useState<string>('');
+    const [mail, setMail] = useState<string>('');
     const [pass, setPass] = useState<string>('');
     const dispatch = useDispatch();
-    const authState = useSelector(( state: StateAuthTypes ) => state.auth.isAuthenticated)
-    const loginState = useSelector(( state: StateAuthTypes ) => state.auth)
+    const regState = useSelector(( state: RegTypes ) => state.reg)
+    const authState = useSelector(( state: AuthTypes ) => state.auth.isAuthenticated)
+
 
 
 
@@ -148,15 +166,14 @@ const LoginPage: React.FC = () => {
                 name="basic"
                 initialValues={{ remember: true }}
                 >
-                <Title>App-raiser</Title>
+                <Title>Регистрация</Title>
                 <Form.Item
                     label="Email"
-                    name="username"
+                    name="email"
                     rules={[{ required: true, message: 'Введите почту!' }]}
                 >
-                    <Input onChange={(e) => setLog(e.target.value)}/>
+                    <Input onChange={(e) => setMail(e.target.value)}/>
                 </Form.Item>
-
                 <Form.Item
                     label="Пароль"
                     name="password"
@@ -166,23 +183,28 @@ const LoginPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" onClick={() => dispatch(requestLogin(log, pass))}>
-                        Войти
+                    <Button type="primary" onClick={() => dispatch(requestReg(mail, pass))}>
+                        Зарегистрироваться
                     </Button>
-                    <Link to='/reg'>
+                    <Link to='/login'>
                       <Button type="dashed">
-                          Регистрация
+                          К форме логина
                       </Button>
                     </Link>
                 </Form.Item>
-                {loginState.loginError ? <LoginError>
-                                          <Text type="danger">
-                                            Произошла ошибка! Проверьте правильность данных.
+                {regState.isRegError ? <LoginError>
+                                          <Text type="danger">Произошла ошибка!
+                                            {regState.errorCode === `auth/weak-password` ?
+                                              ` Пароль должен быть минимум 6 символов` : 
+                                            regState.errorCode === `auth/invalid-email` ?
+                                              ` Введите корректную почту` : 
+                                              ` Проверьте правильность данных`
+                                            }
                                           </Text>
                                         </LoginError> : ''}
-                {loginState.isLoggingIn ? <LoginError><Text strong>Загрузка, подождите...</Text></LoginError> : ''}
+                {regState.isReg ? <LoginError><Text type="success">Успешная регистрация! Теперь вы можете зайти</Text></LoginError> : ''}
+                {regState.isLoading ? <LoginError><Text strong>Загрузка, подождите...</Text></LoginError> : ''}
               </Form>
-                <QuestionCircleOutlined />
               </BgForm>
             </Col>
           </Row>
@@ -194,4 +216,4 @@ const LoginPage: React.FC = () => {
 
 // const LoginPage = Form.create({ name: 'normal_login' })(LoginPageChild);
 
-export default LoginPage
+export default RegPage

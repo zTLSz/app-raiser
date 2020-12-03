@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux'
 import { Layout, Row, Col, Typography, Button, Input } from 'antd';
-import { AuthTypes } from '../reducers/authreducer';
-import { UserEditTypes } from '../reducers/editprofilereducer';
-import TopMenu from './TopMenu/TopmenuWrap'
-import { requestEditProfile } from '../actions/editProfile'
+import { AuthTypes } from '../../reducers/authreducer';
+import { UserEditTypes } from '../../reducers/editprofilereducer';
+import TopMenu from '../TopMenu/TopmenuWrap'
+import { requestEditProfile } from '../../actions/editProfile'
 
 
 
@@ -61,7 +61,7 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
     return (
         <div>
             <TopMenu activeEl={'editprofile'}/>
-            <Layout style={{ background: 'white', marginTop: '40px' }}>
+            <Layout className={'layout'}>
                 <Content>
                     <Row>
                         <Col xs={{offset: 1, span: 23}} 
