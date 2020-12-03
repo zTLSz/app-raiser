@@ -1,5 +1,6 @@
 import { myFirebase, db } from "../firebase/firebase";
 import { put, call } from 'redux-saga/effects'
+import { getCurrentUserInfo } from './getCurrentUserInfo'
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -105,14 +106,6 @@ async function getCurrentUserCount(uid: string) {
   throw new Error("error!")
 }
 
-export async function getCurrentUserInfo(usercounter: number) {
-  const response = await db.collection("userinfo").doc(`${usercounter}`).get()
-  
-  if (response.exists) {
-    return response.data()
-  }
-  throw new Error("error!")
-}
 
 
 
