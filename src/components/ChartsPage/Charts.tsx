@@ -16,8 +16,10 @@ const ChartsPage: React.FC<ChartsPageTypes> = () => {
     return (
         <div>
             <TopMenu activeEl={'charts'}/>
-
+                уцкуцуцк
                 Здесь будет страница чартов
+                <br /><br />
+                sdafadsfdssadsadfa
         </div>
     )
 }

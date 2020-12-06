@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux'
 import TopMenu from './TopMenu/TopmenuWrap'
 import { AuthTypes } from '../reducers/authreducer'
-import { Layout, Row, Col, Typography, Button, Input } from 'antd';
+import { Layout, Row, Col, Typography, Button, Input, Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 const { Content } = Layout;
@@ -12,6 +13,27 @@ const { Content } = Layout;
 
 const TitleWrap = styled.div`
     margin-bottom: 40px;
+    text-align: center;
+`
+
+const AvatarWrap = styled.div`
+    margin-bottom: 40px;
+    text-align: center;
+`
+
+const SubscribeWrap = styled.div`
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+`
+
+const SubscribeItem = styled.div`
+
+`
+
+const SubscribeItemNum = styled.div`
+
 `
 
 
@@ -37,19 +59,26 @@ const MainPage: React.FC<MainPageTypes> = () => {
                 <Content>
                     <Row>
                         <Col xs={{offset: 1, span: 23}} 
-                            xl={{offset: 3, span: 18}} 
-                            xxl={{offset: 3, span: 18}}>
+                            xl={{offset: 3, span: 6}} 
+                            xxl={{offset: 3, span: 6}}>
+                                <AvatarWrap>
+                                    <Avatar size={256} shape="square" icon={<UserOutlined />} />
+                                </AvatarWrap>
                                 <TitleWrap>
                                     <Title>
                                         Привет, {userinfo.nickname}
                                     </Title>
                                 </TitleWrap>
-                        </Col>
-                        <Col xs={{offset: 1, span: 23}} 
-                            xl={{offset: 3, span: 18}} 
-                            xxl={{offset: 3, span: 18}}>
-                            <Title level={3}>Ваши подписчики {userinfo.followers}</Title>
-                            <Title level={3}>Вы подписаны {userinfo.following}</Title>
+                                <SubscribeWrap>
+                                    <SubscribeItem>
+                                        <Title level={4}>{userinfo.followers}</Title>
+                                        <Title level={5}>Подписчики</Title>
+                                    </SubscribeItem>
+                                    <SubscribeItem>
+                                        <Title level={4}>{userinfo.following}</Title>
+                                        <Title level={5}>Подписки</Title>
+                                    </SubscribeItem>
+                                </SubscribeWrap>
                         </Col>
                     </Row>
                 </Content>

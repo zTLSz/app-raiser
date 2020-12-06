@@ -21,6 +21,8 @@ const GlobalMenuStyle = createGlobalStyle`
   menu {
     margin: 0;
     padding: 0;
+    position: fixed;
+    width: 100%;
   }
 `
 
@@ -37,7 +39,7 @@ const TopMenu: React.FC<TopMenuTypes> = ({ activeEl }) => {
     return (
       <MenuWrap>
         <GlobalMenuStyle />
-        <Menu theme={'dark'} className={"test"} defaultSelectedKeys={[activeEl]} mode="horizontal">
+        <Menu theme={'dark'} defaultSelectedKeys={[activeEl]} mode="horizontal">
           <Menu.Item key="main" icon={<ProfileFilled />}>
             <Link to="/">
               Главная
