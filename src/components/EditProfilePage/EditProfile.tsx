@@ -7,6 +7,7 @@ import { AuthTypes } from '../../reducers/authreducer';
 import { UserEditTypes } from '../../reducers/editprofilereducer';
 import TopMenu from '../TopMenu/TopmenuWrap'
 import { requestEditProfile } from '../../actions/editProfile'
+import { storageRef } from '../../firebase/firebase'
 
 
 
@@ -90,6 +91,20 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
           );
         }
       };
+    
+    const avRef = storageRef.child(`avatars/${usercounter}`);
+
+    
+    const test22 = (e: any) => {
+        let files = Array.from(e.target.files);
+
+        files.forEach((file: any) => {
+            avRef.put(file).then(s => {
+                console.log('Uploaded a blob or file!');
+                console.log(s)
+            })
+        })
+    }
 
     const uploadButton = (
         <div>
@@ -120,6 +135,7 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
                             xl={{offset: 3, span: 8}} 
                             xxl={{offset: 3, span: 8}}>
                                 <EditItem>
+                                    <input type="file" onChange={(e) => test22(e)}/>
                                     <Upload
                                         name="avatar"
                                         listType="picture-card"
