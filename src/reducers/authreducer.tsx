@@ -11,6 +11,7 @@ import {
   } from "../actions/auth";
 
 import { USER_EDIT_SUCCESS } from '../actions/editProfile'
+import { USER_PIC_EDIT_SUCCESS } from '../actions/editUserPic'
 
 
 export interface AuthTypes {
@@ -118,6 +119,11 @@ export function authReducer(state = initialState, action: any) {
             verifyingError: true
         };       
     case USER_EDIT_SUCCESS: 
+        return {
+            ...state,
+            info: action.userinfo
+        }
+    case USER_PIC_EDIT_SUCCESS: 
         return {
             ...state,
             info: action.userinfo
