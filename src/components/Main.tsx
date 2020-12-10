@@ -62,7 +62,11 @@ const MainPage: React.FC<MainPageTypes> = () => {
                             xl={{offset: 3, span: 6}} 
                             xxl={{offset: 3, span: 6}}>
                                 <AvatarWrap>
-                                    <Avatar size={256} shape="square" icon={<UserOutlined />} />
+                                    {
+                                        userinfo.avatar === null ?
+                                        <Avatar size={256} shape="square" icon={<UserOutlined />} /> :
+                                        <img src={userinfo.avatar} alt="av" />
+                                    }
                                 </AvatarWrap>
                                 <TitleWrap>
                                     <Title>

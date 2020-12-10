@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux'
 import { Layout, Row, Col, Typography, Button, Input, Upload, message } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { AuthTypes } from '../../reducers/authreducer';
 import { UserEditTypes } from '../../reducers/editprofilereducer';
 import TopMenu from '../TopMenu/TopmenuWrap'
 import { requestEditProfile } from '../../actions/editProfile'
+import { requestEditPicProfile } from '../../actions/editUserPic'
 import { storageRef } from '../../firebase/firebase'
 
 
@@ -77,43 +77,22 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
         setName(e.target.value)
     }
 
-    const handleChange = (info: any): void => {
-        if (info.file.status === 'uploading') {
-            setLoad(true)
-            return;
-        }
-        if (info.file.status === 'done') {
-          // Get this url from response in real world.
-          getBase64(info.file.originFileObj, (imageUrl: string) => {
-                setLoad(false);
-                setUrl(imageUrl)
-            }
-          );
-        }
-      };
     
     const avRef = storageRef.child(`avatars/${usercounter}`);
 
     
-    const test22 = (e: any) => {
+    const handleChangeAvatar = (e: any) => {
         let files = Array.from(e.target.files);
 
         files.forEach((file: any) => {
             avRef.put(file).then(s => {
-                console.log('Uploaded a blob or file!');
-                console.log(s)
+                avRef.getDownloadURL().then(res => {
+                    dispatch(requestEditPicProfile(res, usercounter))
+                    setUrl(res)
+                })
             })
         })
     }
-
-    const uploadButton = (
-        <div>
-          {load ? <LoadingOutlined /> : <PlusOutlined />}
-          <div style={{ marginTop: 8 }}>Upload</div>
-        </div>
-    );
-
-
 
 
     return (
@@ -135,21 +114,8 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
                             xl={{offset: 3, span: 8}} 
                             xxl={{offset: 3, span: 8}}>
                                 <EditItem>
-                                    <input type="file" onChange={(e) => test22(e)}/>
-                                    <Upload
-                                        name="avatar"
-                                        listType="picture-card"
-                                        className="avatar-uploader"
-                                        showUploadList={false}
-                                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                        beforeUpload={beforeUpload}
-                                        onChange={handleChange}
-                                    >
-                                        {url ? 
-                                            <img src={url} alt="avatar" style={{ width: '100%' }} /> 
-                                        :
-                                        uploadButton}
-                                    </Upload>
+                                    <input className="avatar-uploader" type="file" onChange={(e) => handleChangeAvatar(e)}/>
+                                    <img src={url} alt="avatar" style={{ width: '100%' }} /> 
                                 </EditItem>
                                 <EditItem>
                                     <label>

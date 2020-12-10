@@ -106,7 +106,10 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
                             xl={{offset: 3, span: 6}} 
                             xxl={{offset: 3, span: 6}}>
                                 <AvatarWrap>
-                                    <Avatar size={256} shape="square" icon={<UserOutlined />} />
+                                    {profileinfo.info.avatar === null ? 
+                                        <Avatar size={256} shape="square" icon={<UserOutlined />} /> :
+                                        <img src={profileinfo.info.avatar} alt="avatar" />
+                                    }
                                 </AvatarWrap>
                                 <TitleWrap>
                                     <Title>
