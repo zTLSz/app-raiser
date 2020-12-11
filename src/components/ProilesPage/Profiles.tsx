@@ -24,6 +24,9 @@ const TitleWrap = styled.div`
 const AvatarWrap = styled.div`
     margin-bottom: 40px;
     text-align: center;
+    img {
+        max-width: 100%;
+    }
 `
 
 const SubscribeWrap = styled.div`
@@ -77,7 +80,7 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
     
     if (profileinfo.isError) {
         return  <div>
-                    <TopMenu activeEl={'main'}/>
+                    <TopMenu activeEl={''}/>
                     <Layout className={'layout'}>
                         <Content>
                             <Row>
@@ -98,7 +101,7 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
 
     return (
         <div>
-            <TopMenu activeEl={'main'}/>
+            <TopMenu activeEl={''}/>
             <Layout className={'layout'}>
                 <Content>
                     <Row>

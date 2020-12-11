@@ -23,6 +23,15 @@ const GlobalMenuStyle = createGlobalStyle`
     padding: 0;
     position: fixed;
     width: 100%;
+    z-index: 1000;
+  }
+
+  .ant-menu.ant-menu-dark .ant-menu-item-selected {
+    background-color: #656565;
+  }
+
+  .ant-menu-dark.ant-menu-horizontal > .ant-menu-item:hover {
+    background-color: #505050;
   }
 `
 

@@ -13,7 +13,7 @@ const initialState = {
     errorCode: ''
 }
 
-export interface UserEditTypes {
+export interface PicEditTypes {
     isEdit: boolean,
     isEditError: boolean,
     isLoading: boolean,

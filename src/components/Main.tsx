@@ -19,6 +19,9 @@ const TitleWrap = styled.div`
 const AvatarWrap = styled.div`
     margin-bottom: 40px;
     text-align: center;
+    img {
+        max-width: 100%;
+    }
 `
 
 const SubscribeWrap = styled.div`
