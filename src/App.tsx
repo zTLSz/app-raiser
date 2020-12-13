@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import LoginPage from './components/AuthReg/Login'
-import MainPage from './components/Main'
+import MainPage from './components/Main/Main'
 import RegPage from './components/AuthReg/Reg'
 import EditProfilePage from './components/EditProfilePage/EditProfile'
 import ChartsPage from './components/ChartsPage/Charts'
