@@ -4,6 +4,7 @@ import { sagaLoginWorker, LOGIN_REQUEST, sagaVerifyWorker, VERIFY_REQUEST, sagaL
 import { sagaEditProfileWorker, USER_EDIT_REQUEST } from '../editProfile'
 import { sagaEditProfilePicWorker, USER_PIC_EDIT_REQUEST } from '../editUserPic'
 import { sagaGetProfileWorker, GET_PROFILE_REQUEST } from '../getProfile'
+import { sagaAddWallPostWorker, ADD_WALL_POST_REQUEST } from '../addwallpost'
 
 
 export function* rootSaga() {
@@ -14,4 +15,5 @@ export function* rootSaga() {
     yield takeEvery(USER_EDIT_REQUEST, sagaEditProfileWorker)
     yield takeEvery(USER_PIC_EDIT_REQUEST, sagaEditProfilePicWorker)
     yield takeEvery(GET_PROFILE_REQUEST, sagaGetProfileWorker)
+    yield takeEvery(ADD_WALL_POST_REQUEST, sagaAddWallPostWorker)
 }

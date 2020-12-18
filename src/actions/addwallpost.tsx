@@ -1,6 +1,7 @@
 import { myFirebase, db } from "../firebase/firebase";
 import { put, call } from 'redux-saga/effects'
 import firebase from 'firebase'
+import { getCurrentUserWall } from './getCurrentUserWall'
 
 
 
@@ -12,10 +13,10 @@ export const ADD_WALL_POST_FAILURE = "ADD_WALL_POST_FAILURE";
 
 
 
-export const requestAddWallPost = (email: string, password: string) => {
+export const requestAddWallPost = (text: string, date: number, counter: number, author: number) => {
   return {
     type: ADD_WALL_POST_REQUEST,
-    payload: { e: email, p: password }
+    payload: { text: text, date: date, counter: counter, author: author }
   };
 };
 
@@ -33,44 +34,45 @@ export const addWallPostError = (error: { code: string, message: string, a: null
   };
 };
 
+interface AddWallTypes {
+  text: string, 
+  date: number, 
+  counter: number, 
+  author: number
+}
 
 
+export function* sagaAddWallPostWorker(action: { payload: AddWallTypes, type: string }) {
+    const { text, date, counter, author } = action.payload
 
-export function* sagaAddWallPostWorker(action: {payload: {e: string, p: string}, type: string}) {
     try {
-      const payload = yield call(() => fetchReg(action.payload.e, action.payload.p))
-      const usercounter = yield call(() => checkUserCount())
-      yield call(() => addUserInfo(action.payload.e, usercounter))
+      const payload = yield call(() => requestAddWallPost(text, date, counter, author))
+      const posts = yield call(() => getCurrentUserWall(counter))
+      console.log(posts)
+      yield call(() => addPost(action.payload, posts))
       // yield call(() => addUserSystemData(payload.user.uid, action.payload.e, usercounter))
-      //yield put(receiveReg(payload))
+      yield put(receiveAddWallPost(payload))
     } catch (e) {
-      // yield put(regError(e))
+      yield put(addWallPostError(e))
     }
 }
 
 
-async function checkUserCount() {
-  const qSnap = await db.collection("usersystemdata").get()
-  return qSnap.size
-}
 
-async function fetchReg(e: string, p: string) {
-    const response = await myFirebase.auth().createUserWithEmailAndPassword(e, p)
-    return response
-}
-
-async function addUserInfo(email: string, usercounter: number) {
-  const response = await db.collection("userinfo").doc(`${usercounter}`).set({
-    about: '',
-    age: 0,
-    avatar: null,
-    color: "#000000",
-    email: email,
-    followers: 0,
-    following: 0,
-    isAdmin: false,
-    nickname: 'anonim',
-    regdate: firebase.firestore.Timestamp.fromDate(new Date())
+async function addPost(payload: AddWallTypes, posts: any) {
+  const { text, date, counter, author  } = payload;
+  const response = await db.collection("userwall").doc(`${counter}`).update({
+    posts: [
+      ...posts.posts,
+      {
+        author: author,
+        text: text,
+        date: date,
+        counter: counter,
+        likes: 0,
+        dislikes: 0
+      }
+    ]
   })
 }
 

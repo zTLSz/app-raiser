@@ -5,7 +5,7 @@ import TopMenu from '../TopMenu/TopmenuWrap'
 import { AuthTypes } from '../../reducers/authreducer'
 import { Layout, Row, Col, Typography, Button, Input, Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { db } from "../../firebase/firebase";
+import { requestAddWallPost } from '../../actions/addwallpost'
 
 const { Title, Text } = Typography;
 const { Content } = Layout;
@@ -68,6 +68,7 @@ const MainPage: React.FC<MainPageTypes> = () => {
 
     const dispatch = useDispatch();
     const userinfo = useSelector((state: AuthState) => state.auth.info)
+    const [post, setPost] = useState('')
 
     useEffect(() => {
 
@@ -120,6 +121,8 @@ const MainPage: React.FC<MainPageTypes> = () => {
                                             placeholder="Введите Текст"
                                             autoSize={{ minRows: 1, maxRows: 6 }}
                                             maxLength={500}
+                                            value={post}
+                                            onChange={(e) => setPost(e.target.value)}
                                         />
                                     </AddWallPostArea>
                                     <AddWallPostButton>
@@ -127,6 +130,7 @@ const MainPage: React.FC<MainPageTypes> = () => {
                                             type="primary" 
                                             size="large"
                                             disabled={false}
+                                            onClick={() => dispatch(requestAddWallPost(post, Date.now(), 8, 8))}
                                         > 
                                             Отправить
                                         </Button>
