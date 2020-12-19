@@ -1,7 +1,8 @@
-import { myFirebase, db } from "../firebase/firebase";
-import { put, call } from 'redux-saga/effects'
+import { db } from "../firebase/firebase";
+import { put, call, takeEvery } from 'redux-saga/effects'
 import firebase from 'firebase'
 import { getCurrentUserWall } from './getCurrentUserWall'
+import { requestGetWallPosts } from './getWallPosts'
 
 
 
@@ -46,11 +47,12 @@ export function* sagaAddWallPostWorker(action: { payload: AddWallTypes, type: st
     const { text, date, counter, author } = action.payload
 
     try {
+      if (text.length < 3) {
+        throw new Error(); 
+      }
       const payload = yield call(() => requestAddWallPost(text, date, counter, author))
-      const posts = yield call(() => getCurrentUserWall(counter))
-      console.log(posts)
-      yield call(() => addPost(action.payload, posts))
-      // yield call(() => addUserSystemData(payload.user.uid, action.payload.e, usercounter))
+      yield call(() => addPost(action.payload))
+      yield put(requestGetWallPosts(counter))
       yield put(receiveAddWallPost(payload))
     } catch (e) {
       yield put(addWallPostError(e))
@@ -59,45 +61,17 @@ export function* sagaAddWallPostWorker(action: { payload: AddWallTypes, type: st
 
 
 
-async function addPost(payload: AddWallTypes, posts: any) {
+async function addPost(payload: AddWallTypes) {
   const { text, date, counter, author  } = payload;
   const response = await db.collection("userwall").doc(`${counter}`).update({
-    posts: [
-      ...posts.posts,
-      {
+    posts: firebase.firestore.FieldValue.arrayUnion({
         author: author,
         text: text,
         date: date,
         counter: counter,
         likes: 0,
         dislikes: 0
-      }
-    ]
+    })
   })
 }
 
-
-/*
-
-        async function test22() {
-            const response = await db.collection("userwall").doc(`8`).set({
-                posts: [
-                    {
-                        author: 1,
-                        text: '1111',
-                        time: 0,
-                        likes: 0
-                    },
-                    {
-                        author: 2,
-                        text: '1211',
-                        time: 0,
-                        likes: 0
-                    }
-                ]
-            })
-            
-        }
-
-        test22()
-*/

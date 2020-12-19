@@ -5,11 +5,11 @@ import TopMenu from '../TopMenu/TopmenuWrap'
 import { AuthTypes } from '../../reducers/authreducer'
 import { Layout, Row, Col, Typography, Button, Input, Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { requestAddWallPost } from '../../actions/addwallpost'
+import Wall from '../modules/wall/Wall'
+
 
 const { Title, Text } = Typography;
 const { Content } = Layout;
-const { TextArea } = Input;
 
 
 
@@ -37,24 +37,6 @@ const SubscribeItem = styled.div`
 
 `
 
-const SubscribeItemNum = styled.div`
-
-`
-
-const AddWallPost = styled.div`
-    textarea {
-        resize: none;
-    }
-`
-
-const AddWallPostArea = styled.div`
-    margin-bottom: 20px;
-`
-
-const AddWallPostButton = styled.div`
-
-`
-
 
 interface MainPageTypes {
 
@@ -68,6 +50,7 @@ const MainPage: React.FC<MainPageTypes> = () => {
 
     const dispatch = useDispatch();
     const userinfo = useSelector((state: AuthState) => state.auth.info)
+    const userCounter = useSelector((state: AuthState) => state.auth.counter)
     const [post, setPost] = useState('')
 
     useEffect(() => {
@@ -110,32 +93,7 @@ const MainPage: React.FC<MainPageTypes> = () => {
                         <Col xs={{offset: 1, span: 23}} 
                             xl={{offset: 1, span: 11}} 
                             xxl={{offset: 1, span: 11}}>
-                                <TitleWrap>
-                                    <Title>
-                                        Стена
-                                    </Title>
-                                </TitleWrap>
-                                <AddWallPost>
-                                    <AddWallPostArea>
-                                        <TextArea
-                                            placeholder="Введите Текст"
-                                            autoSize={{ minRows: 1, maxRows: 6 }}
-                                            maxLength={500}
-                                            value={post}
-                                            onChange={(e) => setPost(e.target.value)}
-                                        />
-                                    </AddWallPostArea>
-                                    <AddWallPostButton>
-                                        <Button 
-                                            type="primary" 
-                                            size="large"
-                                            disabled={false}
-                                            onClick={() => dispatch(requestAddWallPost(post, Date.now(), 8, 8))}
-                                        > 
-                                            Отправить
-                                        </Button>
-                                    </AddWallPostButton>
-                                </AddWallPost>
+                                <Wall user={userCounter} author={userCounter} />
                         </Col>
                     </Row>
                 </Content>

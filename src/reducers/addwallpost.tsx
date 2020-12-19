@@ -8,11 +8,13 @@ import {
   
 const initialState = {
     isLoading: false,
+    isError: false,
     errorCode: ''
 }
 
 export interface AddWallTypes {
     isLoading: boolean,
+    isError: boolean,
     errorCode: string|number
 }
 
@@ -26,18 +28,21 @@ export function addWallPostReducer(state = initialState, action: { type: string,
             return {
                     ...state,
                     isLoading: true,
+                    isError: false,
                     errorCode: ''
                 };
         case ADD_WALL_POST_SUCCESS:
             return {
                     ...state,
                     isLoading: false,
+                    isError: false,
                     errorCode: ''
                 };
         case ADD_WALL_POST_FAILURE:
             return {
                     ...state,
                     isLoading: false, 
+                    isError: true,
                     errorCode: action.payload
                 };
         default:

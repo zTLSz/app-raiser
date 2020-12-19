@@ -6,6 +6,7 @@ import { ProfileDataTypes } from '../../reducers/getprofilereducer'
 import { AuthTypes } from '../../reducers/authreducer'
 import Loader from '../Preloader'
 import { requestGetProfile } from '../../actions/getProfile' 
+import Wall from '../modules/wall/Wall'
 import { Layout, Row, Col, Typography, Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Redirect } from 'react-router'
@@ -44,7 +45,7 @@ const SubscribeItem = styled.div`
 interface PageTypes {
     match: {
         params: {
-            id: string|number
+            id: number
         }
     }
 }
@@ -129,6 +130,11 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
                                         <Title level={5}>Подписки</Title>
                                     </SubscribeItem>
                                 </SubscribeWrap>
+                        </Col>
+                        <Col xs={{offset: 1, span: 23}} 
+                            xl={{offset: 1, span: 11}} 
+                            xxl={{offset: 1, span: 11}}>
+                                <Wall author={userCounter} user={match.params.id} />
                         </Col>
                     </Row>
                 </Content>
