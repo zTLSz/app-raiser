@@ -47,7 +47,7 @@ export function* sagaEditProfileWorker(action: {payload: {nickname: string, user
 
 async function editUserInfo(nickname: string, usercounter: number) {
     const response = await db.collection("userinfo").doc(`${usercounter}`).update({
-      nickname: nickname,
+      about: nickname,
     })
     return response;
   }

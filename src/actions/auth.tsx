@@ -93,7 +93,7 @@ export function* sagaLoginWorker(action: {payload: {e: string, p: string}, type:
 
 async function fetchAuth(e: string, p: string) {
     const response = await myFirebase.auth().signInWithEmailAndPassword(e, p)
-    // console.log(response)
+
     return response
 }
 

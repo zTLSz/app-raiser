@@ -135,9 +135,9 @@ interface AuthTypes {
 
 
 const RegPage: React.FC = () => {
-    const [login, setLogin] = useState<string>('');
     const [mail, setMail] = useState<string>('');
     const [pass, setPass] = useState<string>('');
+    const [nickname, setNickname] = useState<string>('');
     const dispatch = useDispatch();
     const regState = useSelector(( state: RegTypes ) => state.reg)
     const authState = useSelector(( state: AuthTypes ) => state.auth.isAuthenticated)
@@ -181,9 +181,16 @@ const RegPage: React.FC = () => {
                 >
                     <Input.Password onChange={(e) => setPass(e.target.value)} />
                 </Form.Item>
+                <Form.Item
+                    label="Ник"
+                    name="nick"
+                    rules={[{ required: true, message: 'Введите Никнейм!' }]}
+                >
+                    <Input onChange={(e) => setNickname(e.target.value)} />
+                </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" onClick={() => dispatch(requestReg(mail, pass))}>
+                    <Button type="primary" onClick={() => dispatch(requestReg(mail, pass, nickname))}>
                         Зарегистрироваться
                     </Button>
                     <Link to='/login'>

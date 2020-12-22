@@ -112,7 +112,7 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
                                 <EditItem>
                                     <label>
                                         <LabelText>
-                                            Введите имя
+                                            Введите немного информации о себе
                                         </LabelText>
                                         <Input placeholder="Введите имя" 
                                             value={name}

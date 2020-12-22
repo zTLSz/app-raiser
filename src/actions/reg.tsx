@@ -15,10 +15,10 @@ export const HIDE_LOADER = "HIDE_LOADER";
 
 
 
-export const requestReg = (email: string, password: string) => {
+export const requestReg = (email: string, password: string, nickname: string) => {
   return {
     type: REG_REQUEST,
-    payload: { e: email, p: password }
+    payload: { e: email, p: password, n: nickname }
   };
 };
 
@@ -46,12 +46,17 @@ export const redirectReg = () => {
 
 
 
-export function* sagaRegWorker(action: {payload: {e: string, p: string}, type: string}) {
-    try {
-      const payload = yield call(() => fetchReg(action.payload.e, action.payload.p))
+export function* sagaRegWorker(action: {payload: {e: string, p: string, n: string}, type: string}) {
+    const { e, p, n } = action.payload
+     try {
+
+      if (n.length < 3) {
+        throw new Error();
+      }
+      const payload = yield call(() => fetchReg(e, p))
       const usercounter = yield call(() => checkUserCount())
-      yield call(() => addUserInfo(action.payload.e, usercounter))
-      yield call(() => addUserSystemData(payload.user.uid, action.payload.e, usercounter))
+      yield call(() => addUserInfo(e, usercounter, n))
+      yield call(() => addUserSystemData(payload.user.uid, e, usercounter))
       yield put(receiveReg(payload))
     } catch (e) {
       yield put(regError(e))
@@ -69,7 +74,7 @@ async function fetchReg(e: string, p: string) {
     return response
 }
 
-async function addUserInfo(email: string, usercounter: number) {
+async function addUserInfo(email: string, usercounter: number, nickname: string) {
   const response = await db.collection("userinfo").doc(`${usercounter}`).set({
     about: '',
     age: 0,
@@ -79,9 +84,10 @@ async function addUserInfo(email: string, usercounter: number) {
     followers: 0,
     following: 0,
     isAdmin: false,
-    nickname: 'anonim',
+    nickname: nickname,
     regdate: firebase.firestore.Timestamp.fromDate(new Date())
   })
+
 }
 
 async function addUserSystemData(uid: string, email: string, usercounter: any) {
@@ -89,4 +95,5 @@ async function addUserSystemData(uid: string, email: string, usercounter: any) {
       email: email,
       usercounter: usercounter
   }) 
+
 }
