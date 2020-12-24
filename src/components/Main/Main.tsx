@@ -18,6 +18,8 @@ const TitleWrap = styled.div`
     text-align: center;
 `
 
+
+
 const AvatarWrap = styled.div`
     margin-bottom: 40px;
     text-align: center;
@@ -78,6 +80,9 @@ const MainPage: React.FC<MainPageTypes> = () => {
                                     <Title>
                                         Привет, {userinfo.nickname}
                                     </Title>
+                                    <Text>
+                                        {userinfo.about} 
+                                    </Text>
                                 </TitleWrap>
                                 <SubscribeWrap>
                                     <SubscribeItem>

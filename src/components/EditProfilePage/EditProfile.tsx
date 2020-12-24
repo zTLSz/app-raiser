@@ -77,7 +77,7 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
     const usercounter = useSelector((state: AuthState) => state.auth.counter)
     const editstatus = useSelector((state: AuthState) => state.editprofile)
 
-    const [name, setName] = useState(userinfo.nickname);
+    const [name, setName] = useState(userinfo.about);
     const [load, setLoad] = useState(false);
     const [url, setUrl] = useState('');
 
@@ -117,7 +117,7 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
                                         <Input placeholder="Введите имя" 
                                             value={name}
                                             onChange={(e) => editName(e)}
-                                            maxLength={25}
+                                            maxLength={120}
                                         />
                                     </label> 
                                 </EditItem>
