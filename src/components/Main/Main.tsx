@@ -98,7 +98,7 @@ const MainPage: React.FC<MainPageTypes> = () => {
                         <Col xs={{offset: 1, span: 23}} 
                             xl={{offset: 1, span: 11}} 
                             xxl={{offset: 1, span: 11}}>
-                                <Wall user={userCounter} author={userCounter} />
+                                <Wall user={userCounter} author={userCounter} name={userinfo.nickname}/>
                         </Col>
                     </Row>
                 </Content>

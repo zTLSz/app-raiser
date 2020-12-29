@@ -7,10 +7,10 @@ export const USER_EDIT_FAILURE = "USER_EDIT_FAILURE";
 export const USER_EDIT_SUCCESS = "USER_EDIT_SUCCESS";
 
 
-export const requestEditProfile = (nickname: string, usercounter: number) => {
+export const requestEditProfile = (about: string, usercounter: number) => {
     return {
       type: USER_EDIT_REQUEST,
-      payload: { nickname: nickname, usercounter: usercounter }
+      payload: { about: about, usercounter: usercounter }
     };
   };
   
@@ -30,13 +30,13 @@ export const editProfileError = (error: { code: string, message: string, a: null
 };
 
 
-export function* sagaEditProfileWorker(action: {payload: {nickname: string, usercounter: number}, type: string}) {
-    const { nickname, usercounter } = action.payload
+export function* sagaEditProfileWorker(action: {payload: {about: string, usercounter: number}, type: string}) {
+    const { about, usercounter } = action.payload
     try {
-      if (nickname.length < 3) {
+      if (about.length < 3) {
         throw new Error(); 
       }
-      const payload = yield call(() => editUserInfo(nickname, usercounter))
+      const payload = yield call(() => editUserInfo(about, usercounter))
       const userinfo = yield call(() => getCurrentUserInfo(usercounter))
       yield put(receiveEditProfile(payload, userinfo))
     } catch (e) {
@@ -45,9 +45,9 @@ export function* sagaEditProfileWorker(action: {payload: {nickname: string, user
 }
 
 
-async function editUserInfo(nickname: string, usercounter: number) {
+async function editUserInfo(about: string, usercounter: number) {
     const response = await db.collection("userinfo").doc(`${usercounter}`).update({
-      about: nickname,
+      about: about,
     })
     return response;
   }

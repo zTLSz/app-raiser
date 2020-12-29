@@ -64,6 +64,7 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
     const dispatch = useDispatch();
     const profileinfo = useSelector((state: ProfilesState) => state.currprofile)
     const userCounter = useSelector((state: AuthState) => state.auth.counter)
+    const userName = useSelector((state: AuthState) => state.auth.info.nickname)
     const { match } = props;
 
     useEffect(() => {
@@ -134,7 +135,7 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
                         <Col xs={{offset: 1, span: 23}} 
                             xl={{offset: 1, span: 11}} 
                             xxl={{offset: 1, span: 11}}>
-                                <Wall author={userCounter} user={match.params.id} />
+                                <Wall author={userCounter} user={match.params.id} name={userName}/>
                         </Col>
                     </Row>
                 </Content>

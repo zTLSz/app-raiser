@@ -14,10 +14,10 @@ export const ADD_WALL_POST_FAILURE = "ADD_WALL_POST_FAILURE";
 
 
 
-export const requestAddWallPost = (text: string, date: number, counter: number, author: number) => {
+export const requestAddWallPost = (text: string, date: number, counter: number, author: number, name: string) => {
   return {
     type: ADD_WALL_POST_REQUEST,
-    payload: { text: text, date: date, counter: counter, author: author }
+    payload: { text: text, date: date, counter: counter, author: author, name: name }
   };
 };
 
@@ -39,18 +39,19 @@ interface AddWallTypes {
   text: string, 
   date: number, 
   counter: number, 
-  author: number
+  author: number,
+  name: string
 }
 
 
 export function* sagaAddWallPostWorker(action: { payload: AddWallTypes, type: string }) {
-    const { text, date, counter, author } = action.payload
+    const { text, date, counter, author, name } = action.payload
 
     try {
       if (text.length < 3) {
         throw new Error(); 
       }
-      const payload = yield call(() => requestAddWallPost(text, date, counter, author))
+      const payload = yield call(() => requestAddWallPost(text, date, counter, author, name))
       yield call(() => addPost(action.payload))
       yield put(requestGetWallPosts(counter))
       yield put(receiveAddWallPost(payload))
@@ -62,16 +63,15 @@ export function* sagaAddWallPostWorker(action: { payload: AddWallTypes, type: st
 
 
 async function addPost(payload: AddWallTypes) {
-  const { text, date, counter, author  } = payload;
-  const response = await db.collection("userwall").doc(`${counter}`).update({
-    posts: firebase.firestore.FieldValue.arrayUnion({
+  const { text, date, counter, author, name  } = payload;
+  const response = await db.collection("userwall").doc(`${counter}`).collection("posts").doc().set({
         author: author,
+        authorName: name,
         text: text,
         date: date,
         counter: counter,
         likes: 0,
         dislikes: 0
-    })
   })
 }
 

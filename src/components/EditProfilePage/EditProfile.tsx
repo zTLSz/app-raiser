@@ -114,7 +114,7 @@ const EditProfilePage: React.FC<EditProfilePageTypes> = () => {
                                         <LabelText>
                                             Введите немного информации о себе
                                         </LabelText>
-                                        <Input placeholder="Введите имя" 
+                                        <Input placeholder="Информация о себе" 
                                             value={name}
                                             onChange={(e) => editName(e)}
                                             maxLength={120}

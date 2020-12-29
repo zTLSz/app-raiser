@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux'
+import WallPost from './Post'
 import { GetWallTypes } from '../../../reducers/getwallposts'
 import { AddWallTypes } from '../../../reducers/addwallpost'
 import { Layout, Typography, Button, Input } from 'antd';
-import { Comment } from 'antd';
 import { requestAddWallPost } from '../../../actions/addwallpost'
 import { requestGetWallPosts } from '../../../actions/getWallPosts'
 
@@ -39,7 +39,8 @@ const Error = styled.div`
 
 interface WallTypes {
     user: number,
-    author: number
+    author: number,
+    name: string
 }
 
 interface PostsStateTypes {
@@ -52,17 +53,17 @@ interface PostsStateTypes {
 const Wall: React.FC<WallTypes> = (props) => {
 
 
-    const { user, author } = props;
+    const { user, author, name } = props;
     const dispatch = useDispatch();
     const [post, setPost] = useState('')
     const walldata = useSelector((state: PostsStateTypes) => state.wallposts)
     const addpoststatus = useSelector((state: PostsStateTypes) => state.addwallpost)
     
-    const posts = walldata.postsdata.posts;
+    const posts = walldata.postsdata;
     let postItems;
 
     if (posts.length > 0) {
-        postItems = posts.map((post, i) => <Comment key={i} author={post.author} content={post.text}></Comment>)
+        postItems = posts.map((post, i) => <WallPost key={i} post={post} />)
     }
 
     useEffect(() => {
@@ -93,7 +94,7 @@ const Wall: React.FC<WallTypes> = (props) => {
                         type="primary" 
                         size="large"
                         disabled={false}
-                        onClick={() => dispatch(requestAddWallPost(post, Date.now(), user, author))}
+                        onClick={() => dispatch(requestAddWallPost(post, Date.now(), user, author, name))}
                     > 
                         Отправить
                     </Button>

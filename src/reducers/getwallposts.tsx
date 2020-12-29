@@ -11,18 +11,14 @@ const initialState = {
     isLoading: false,
     isError: false,
     errorCode: '',
-    postsdata: {
-        posts: []
-    }
+    postsdata: []
 }
 
 export interface GetWallTypes {
     isLoading: boolean,
     errorCode: string|number,
     isError: boolean,
-    postsdata: {
-        posts: any[]
-    }
+    postsdata: any[]
 }
 
 
