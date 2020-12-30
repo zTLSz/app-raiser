@@ -66,10 +66,11 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
     const userCounter = useSelector((state: AuthState) => state.auth.counter)
     const userName = useSelector((state: AuthState) => state.auth.info.nickname)
     const { match } = props;
+    console.log(props)
 
     useEffect(() => {
         dispatch(requestGetProfile(match.params.id))
-    }, [])
+    }, [match.params.id])
 
     if (profileinfo.isLoading) {
         return <Loader />
