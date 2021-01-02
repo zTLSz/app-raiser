@@ -6,6 +6,7 @@ import { getProfileReducer } from './getprofilereducer'
 import { editProfilePicReducer } from './editprofilepicreducer'
 import { addWallPostReducer } from './addwallpost'
 import { getWallPostsReducer } from './getwallposts'
+import { setPostLikeReducer } from './setpostlikereducer'
 
 
 
@@ -17,7 +18,8 @@ export const rootReducer = combineReducers({
     editprofilepic: editProfilePicReducer,
     currprofile: getProfileReducer,
     addwallpost: addWallPostReducer,
-    wallposts: getWallPostsReducer
+    wallposts: getWallPostsReducer,
+    postrate: setPostLikeReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>

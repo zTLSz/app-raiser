@@ -63,11 +63,11 @@ const Wall: React.FC<WallTypes> = (props) => {
     let postItems;
 
     if (posts.length > 0) {
-        postItems = posts.map((post, i) => <WallPost key={i} post={post} />)
+        postItems = posts.map((post, i) => <WallPost key={i} post={post} user={user} author={author} name={name}/>)
     }
 
     useEffect(() => {
-        dispatch(requestGetWallPosts(user))
+        dispatch(requestGetWallPosts(user, author))
     }, [])
 
 

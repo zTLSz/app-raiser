@@ -1,7 +1,6 @@
 import { db } from "../firebase/firebase";
 import { put, call, takeEvery } from 'redux-saga/effects'
 import firebase from 'firebase'
-import { getCurrentUserWall } from './getCurrentUserWall'
 import { requestGetWallPosts } from './getWallPosts'
 
 
@@ -53,7 +52,7 @@ export function* sagaAddWallPostWorker(action: { payload: AddWallTypes, type: st
       }
       const payload = yield call(() => requestAddWallPost(text, date, counter, author, name))
       yield call(() => addPost(action.payload))
-      yield put(requestGetWallPosts(counter))
+      yield put(requestGetWallPosts(counter, author))
       yield put(receiveAddWallPost(payload))
     } catch (e) {
       yield put(addWallPostError(e))

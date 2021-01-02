@@ -13,10 +13,10 @@ export const GET_WALL_POSTS_FAILURE = "GET_WALL_POSTS_FAILURE";
 
 
 
-export const requestGetWallPosts = (counter: number) => {
+export const requestGetWallPosts = (counter: number, author: number) => {
   return {
     type: GET_WALL_POSTS_REQUEST,
-    payload: { counter: counter }
+    payload: { counter: counter, author: author }
   };
 };
 
@@ -35,15 +35,16 @@ export const getWallPostsError = (error: { code: string, message: string, a: nul
 };
 
 interface GetWallTypes {
-  counter: number
+  counter: number,
+  author: number
 }
 
 
 export function* sagaGetWallPostsWorker(action: { payload: GetWallTypes, type: string }) {
-    const { counter } = action.payload
+    const { counter, author } = action.payload
 
     try {
-      const posts = yield call(() => getCurrentUserWall(counter))
+      const posts = yield call(() => getCurrentUserWall(counter, author))
       yield put(receiveGetWallPosts(posts))
     } catch (e) {
       yield put(getWallPostsError(e))

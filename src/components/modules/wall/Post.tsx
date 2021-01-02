@@ -6,6 +6,7 @@ import { Comment } from 'antd';
 import { Tooltip, Avatar } from 'antd';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { requestSetPostLike } from '../../../actions/postlikes/setPostLike' 
 
 
 
@@ -39,7 +40,10 @@ const CommentWrap = styled.div`
 
 
 interface WallTypes {
-    post: any
+    post: any,
+    author: any, 
+    name: any,
+    user: any
 }
 
 
@@ -47,15 +51,15 @@ interface WallTypes {
 const WallPost: React.FC<WallTypes> = (props) => {
 
 
-    
-    const { post } = props;
+    const { post, author, name, user } = props;
     const dispatch = useDispatch();
     const [likes, setLikes] = useState(post.likes);
     const [dislikes, setDislikes] = useState(post.dislikes);
-    const [action, setAction] = useState('');
+    const [action, setAction] = useState(post.isLikedByCurrentUser ? 'liked' : '' );
     const postdate = new Date(post.date)
 
     const like = () => {
+        dispatch(requestSetPostLike(post.postId, author, name, user, post.likes))
         setLikes(post.likes + 1);
         setDislikes(post.dislikes);
         setAction('liked');
