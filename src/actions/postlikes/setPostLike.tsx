@@ -69,6 +69,24 @@ async function addLike(payload: PostLikeTypes) {
                         .doc(`${userid}`).collection("posts")
                         .doc(postid).collection('likes').doc(`${authorid}`).set({
                           id: authorid,
-                          name: authorname
+                          name: authorname,
+                          userinfo: db.doc(`/userinfo/${authorid}`)
                         })
+
+  /*
+
+  const getLikedUserInfo =  await db.collection("userwall")
+    .doc(`${userid}`).collection("posts")
+    .doc(postid).collection('likes').doc(`${authorid}`).get()
+
+  let getLikedUserInfoData = getLikedUserInfo.data()
+
+  if (getLikedUserInfoData?.userinfo) {
+    getLikedUserInfoData.userinfo.get().then((user: any) => console.log(user.data()))
+  }
+
+  */
+
+
+
 }

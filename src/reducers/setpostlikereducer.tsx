@@ -4,6 +4,12 @@ import {
     SET_POST_LIKE_FAILURE,
   } from "../actions/postlikes/setPostLike";
 
+import {
+    REMOVE_POST_LIKE_REQUEST,
+    REMOVE_POST_LIKE_SUCCESS,
+    REMOVE_POST_LIKE_FAILURE
+} from '../actions/postlikes/deletePostLike'
+
 
 
 
@@ -39,6 +45,25 @@ export function setPostLikeReducer(state = initialState, action: { type: string,
                     isLoading: false,
                 };
         case SET_POST_LIKE_FAILURE:
+            return {
+                    ...state,
+                    isError: true,
+                    isLoading: false, 
+                    errorCode: action.payload
+                };
+        case REMOVE_POST_LIKE_REQUEST:
+            return {
+                    ...state,
+                    isError: false,
+                    isLoading: true,
+                };
+        case REMOVE_POST_LIKE_SUCCESS:
+            return {
+                    ...state,
+                    isError: false,
+                    isLoading: false,
+                };
+        case REMOVE_POST_LIKE_FAILURE:
             return {
                     ...state,
                     isError: true,

@@ -7,6 +7,7 @@ import { Tooltip, Avatar } from 'antd';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { requestSetPostLike } from '../../../actions/postlikes/setPostLike' 
+import { requestDeletePostLike } from '../../../actions/postlikes/deletePostLike'
 
 
 
@@ -66,6 +67,7 @@ const WallPost: React.FC<WallTypes> = (props) => {
     };
 
     const dislike = () => {
+        dispatch(requestDeletePostLike(post.postId, author, user, post.likes))
         setLikes(post.likes);
         setDislikes(post.dislikes + 1);
         setAction('disliked');
