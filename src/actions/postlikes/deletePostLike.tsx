@@ -15,10 +15,18 @@ export const REMOVE_POST_LIKE_FAILURE = "REMOVE_POST_LIKE_FAILURE";
 export const requestDeletePostLike =  (postid: string, 
                                     authorid: number, 
                                     userid: number,
-                                    likes: number) => {
+                                    likes: number,
+                                    dislikes: number,
+                                    currtype: string|undefined) => {
   return {
     type: REMOVE_POST_LIKE_REQUEST,
-    payload: { postid: postid, authorid: authorid, userid: userid, likes: likes }
+    payload: {  postid: postid, 
+                authorid: authorid, 
+                userid: userid, 
+                likes: likes, 
+                dislikes: dislikes,
+                currtype: currtype
+              }
   };
 };
 
@@ -40,15 +48,17 @@ interface PostLikeTypes {
     postid: string, 
     authorid: number, 
     userid: number,
-    likes: number
+    likes: number,
+    dislikes: number,
+    currtype: string|undefined
 }
 
 
 export function* sagaDeletePostLike(action: { payload: PostLikeTypes, type: string }) {
-    const { postid, authorid, userid, likes } = action.payload
+    const { postid, authorid, userid, likes, dislikes, currtype } = action.payload
 
     try {
-      const payload = yield call(() => requestDeletePostLike(postid, authorid, userid, likes))
+      const payload = yield call(() => requestDeletePostLike(postid, authorid, userid, likes, dislikes, currtype))
       yield call(() => removeLike(action.payload))
       yield put(receiveDeletePostLike(payload))
     } catch (e) {
@@ -59,10 +69,19 @@ export function* sagaDeletePostLike(action: { payload: PostLikeTypes, type: stri
 
 
 async function removeLike(payload: PostLikeTypes) {
-  const { postid, authorid, userid, likes } = payload
-  const response = await db.collection("userwall").doc(`${userid}`).collection("posts").doc(postid).update({
-    likes: likes - 1
-  })
+  const { postid, authorid, userid, likes, dislikes, currtype } = payload
+
+  if (currtype === 'LIKE') {
+    const response = await db.collection("userwall").doc(`${userid}`).collection("posts").doc(postid).update({
+      likes: likes - 1
+    })
+  }
+
+  if (currtype === 'DISLIKE') {
+    const response = await db.collection("userwall").doc(`${userid}`).collection("posts").doc(postid).update({
+      dislikes: dislikes - 1
+    })
+  }
   const likeinfo = await db.collection("userwall")
                         .doc(`${userid}`).collection("posts")
                         .doc(postid).collection('likes').doc(`${authorid}`).delete()

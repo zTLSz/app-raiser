@@ -56,35 +56,59 @@ const WallPost: React.FC<WallTypes> = (props) => {
     const dispatch = useDispatch();
     const [likes, setLikes] = useState(post.likes);
     const [dislikes, setDislikes] = useState(post.dislikes);
-    const [action, setAction] = useState(post.isLikedByCurrentUser ? 'liked' : '' );
+    const [action, setAction] = useState(post.isLikedByCurrentUser);
     const postdate = new Date(post.date)
 
     const like = () => {
-        dispatch(requestSetPostLike(post.postId, author, name, user, post.likes))
-        setLikes(post.likes + 1);
-        setDislikes(post.dislikes);
-        setAction('liked');
+        dispatch(requestDeletePostLike(post.postId, author, user, likes, dislikes, action))
+        dispatch(requestSetPostLike(post.postId, author, name, user, likes, dislikes, 'LIKE'))
+        if (action === '') {
+            setLikes(likes + 1)
+        } else {
+            setLikes(likes + 1);
+            setDislikes(dislikes - 1);
+        }
+        setAction('LIKE');
     };
 
     const dislike = () => {
-        dispatch(requestDeletePostLike(post.postId, author, user, post.likes))
-        setLikes(post.likes);
-        setDislikes(post.dislikes + 1);
-        setAction('disliked');
+        dispatch(requestDeletePostLike(post.postId, author, user, likes, dislikes, action))
+        dispatch(requestSetPostLike(post.postId, author, name, user, likes, dislikes, 'DISLIKE'))
+        if (action === '') {
+            setDislikes(dislikes + 1)
+        } else {
+            setLikes(likes - 1);
+            setDislikes(dislikes + 1);
+        }
+        setAction('DISLIKE');
     };
 
     const actions = [
         <Tooltip key="comment-basic-like" title="Like">
-          <span onClick={like}>
-            {React.createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
-            <span className="comment-action">{likes}</span>
-          </span>
+        {action === 'LIKE' ?
+            <span>
+                {React.createElement(LikeFilled)}
+                <span className="comment-action">{likes}</span>
+            </span>
+            :
+            <span onClick={like}>
+                {React.createElement(LikeOutlined)}
+                <span className="comment-action">{likes}</span>
+            </span>
+        }
         </Tooltip>,
         <Tooltip key="comment-basic-dislike" title="Dislike">
-          <span onClick={dislike}>
-            {React.createElement(action === 'disliked' ? DislikeFilled : DislikeOutlined)}
-            <span className="comment-action">{dislikes}</span>
-          </span>
+            {action === 'DISLIKE' ?
+                <span>
+                    {React.createElement(DislikeFilled)}
+                    <span className="comment-action">{dislikes}</span>
+                </span>
+                :
+                <span onClick={dislike}>
+                    {React.createElement(DislikeOutlined)}
+                    <span className="comment-action">{dislikes}</span>
+                </span>
+            }
         </Tooltip>,
     ];
     

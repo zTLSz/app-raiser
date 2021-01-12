@@ -12,10 +12,15 @@ export async function getCurrentUserWall(usercounter: number, currentUser: numbe
     });
 
     for (let i=0; i < responsearray.length; i++) {
-      isLikedByCurrentUser = await postRef.doc(responsearray[i].postId).collection('likes').doc(`${currentUser}`).get() 
+      isLikedByCurrentUser = await postRef.doc(responsearray[i].postId).collection('likes').doc(`${currentUser}`).get();
+      let likedType =  ''; 
+      if (typeof isLikedByCurrentUser.data() === "object") {
+        const datatype = isLikedByCurrentUser.data()
+        likedType = datatype?.type
+      }
       responsearray[i] = {
         ...responsearray[i],
-        isLikedByCurrentUser: typeof isLikedByCurrentUser.data() === "object" ? true : false
+        isLikedByCurrentUser: likedType
       }  
     }
 

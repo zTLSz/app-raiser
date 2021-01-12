@@ -16,10 +16,19 @@ export const requestSetPostLike =  (postid: string,
                                     authorid: number, 
                                     authorname: string, 
                                     userid: number,
-                                    likes: number) => {
+                                    likes: number,
+                                    dislikes: number,
+                                    type: string) => {
   return {
     type: SET_POST_LIKE_REQUEST,
-    payload: { postid: postid, authorid: authorid, authorname: authorname, userid: userid, likes: likes }
+    payload: {  postid: postid, 
+                authorid: authorid, 
+                authorname: authorname, 
+                userid: userid, 
+                likes: likes,
+                dislikes: dislikes,
+                type: type
+              }
   };
 };
 
@@ -42,15 +51,17 @@ interface PostLikeTypes {
     authorid: number, 
     authorname: string,
     userid: number,
-    likes: number
+    likes: number,
+    dislikes: number,
+    type: string
 }
 
 
 export function* sagaSetPostLike(action: { payload: PostLikeTypes, type: string }) {
-    const { postid, authorid, authorname, userid, likes } = action.payload
+    const { postid, authorid, authorname, userid, likes, dislikes, type } = action.payload
 
     try {
-      const payload = yield call(() => requestSetPostLike(postid, authorid, authorname, userid, likes))
+      const payload = yield call(() => requestSetPostLike(postid, authorid, authorname, userid, likes, dislikes, type))
       yield call(() => addLike(action.payload))
       yield put(receiveSetPostLike(payload))
     } catch (e) {
@@ -61,15 +72,25 @@ export function* sagaSetPostLike(action: { payload: PostLikeTypes, type: string 
 
 
 async function addLike(payload: PostLikeTypes) {
-  const { postid, authorid, authorname, userid, likes } = payload
-  const response = await db.collection("userwall").doc(`${userid}`).collection("posts").doc(postid).update({
-    likes: likes + 1
-  })
+  const { postid, authorid, authorname, userid, likes, dislikes, type } = payload
+
+  if (type === 'LIKE') {
+    const response = await db.collection("userwall").doc(`${userid}`).collection("posts").doc(postid).update({
+      likes: likes + 1
+    })
+  }
+
+  if (type === 'DISLIKE') {
+    const response = await db.collection("userwall").doc(`${userid}`).collection("posts").doc(postid).update({
+      dislikes: dislikes + 1
+    })
+  }
   const likeinfo = await db.collection("userwall")
                         .doc(`${userid}`).collection("posts")
                         .doc(postid).collection('likes').doc(`${authorid}`).set({
                           id: authorid,
                           name: authorname,
+                          type: type,
                           userinfo: db.doc(`/userinfo/${authorid}`)
                         })
 
