@@ -56,20 +56,17 @@ const WallPost: React.FC<WallTypes> = (props) => {
     const [likes, setLikes] = useState(post.likes);
     const [dislikes, setDislikes] = useState(post.dislikes);
     const [action, setAction] = useState(post.isLikedByCurrentUser);
-    const [test, setTest] = useState(1);
-    const postdate = new Date(post.date);
+    const [postdate, setPostDate] = useState(new Date(post.date))
 
 
 
     useEffect(() => {     
-        console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGJJJ')
         setLikes(post.likes)
         setDislikes(post.dislikes)
+        setAction(post.isLikedByCurrentUser)
+        setPostDate(new Date(post.date))
     }, [post])
     
-    //console.log(post.dislikes)
-    //console.log(likes)
-    //console.log(dislikes)
 
     const like = () => {
         dispatch(requestDeletePostLike(post.postId, author, user, likes, dislikes, action))
@@ -81,7 +78,6 @@ const WallPost: React.FC<WallTypes> = (props) => {
             setDislikes(dislikes - 1);
         }
         setAction('LIKE');
-        setTest(2)
     };
 
     const dislike = () => {
@@ -94,7 +90,6 @@ const WallPost: React.FC<WallTypes> = (props) => {
             setDislikes(dislikes + 1);
         }
         setAction('DISLIKE');
-        setTest(3)
     };
 
     const actions = [
@@ -145,33 +140,9 @@ const WallPost: React.FC<WallTypes> = (props) => {
                     </Tooltip>
                 }
                 />
-                {likes}
         </CommentWrap>
     )
 }
 
 
 export default WallPost
-
-/*
-
-            <div style={{'marginTop': '20px'}}>
-                <div>
-                    {post.author}
-                </div>
-                <div>
-                    {post.authorName}
-                </div>
-                <div>
-                    {postdate.toString()}
-                </div>
-                <div>
-                    Likes: {post.likes} <br />
-                    Dislikes: {post.dislikes}
-                </div>
-                <div>
-                    {post.text}
-                </div>
-
-            </div>
-*/
