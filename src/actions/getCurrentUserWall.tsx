@@ -5,7 +5,7 @@ export async function getCurrentUserWall(usercounter: number, currentUser: numbe
     let responsearray: any[] = [];
     let isLikedByCurrentUser;
     const postRef = db.collection("userwall").doc(`${usercounter}`).collection('posts')
-    const response = await postRef.orderBy("date", "desc").limit(5).get();
+    const response = await postRef.orderBy("date", "desc").limit(1).get();
 
     response.forEach((doc) => {
       responsearray.push({ ...doc.data(), postId: doc.id })

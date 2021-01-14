@@ -44,20 +44,32 @@ interface WallTypes {
     post: any,
     author: any, 
     name: any,
-    user: any
+    user: any,
 }
 
 
 
 const WallPost: React.FC<WallTypes> = (props) => {
 
-
     const { post, author, name, user } = props;
     const dispatch = useDispatch();
     const [likes, setLikes] = useState(post.likes);
     const [dislikes, setDislikes] = useState(post.dislikes);
     const [action, setAction] = useState(post.isLikedByCurrentUser);
-    const postdate = new Date(post.date)
+    const [test, setTest] = useState(1);
+    const postdate = new Date(post.date);
+
+
+
+    useEffect(() => {     
+        console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGJJJ')
+        setLikes(post.likes)
+        setDislikes(post.dislikes)
+    }, [post])
+    
+    //console.log(post.dislikes)
+    //console.log(likes)
+    //console.log(dislikes)
 
     const like = () => {
         dispatch(requestDeletePostLike(post.postId, author, user, likes, dislikes, action))
@@ -69,6 +81,7 @@ const WallPost: React.FC<WallTypes> = (props) => {
             setDislikes(dislikes - 1);
         }
         setAction('LIKE');
+        setTest(2)
     };
 
     const dislike = () => {
@@ -81,6 +94,7 @@ const WallPost: React.FC<WallTypes> = (props) => {
             setDislikes(dislikes + 1);
         }
         setAction('DISLIKE');
+        setTest(3)
     };
 
     const actions = [
@@ -131,6 +145,7 @@ const WallPost: React.FC<WallTypes> = (props) => {
                     </Tooltip>
                 }
                 />
+                {likes}
         </CommentWrap>
     )
 }
