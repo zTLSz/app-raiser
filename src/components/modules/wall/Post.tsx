@@ -38,6 +38,11 @@ const CommentWrap = styled.div`
     }
 `
 
+const ListLikesLink = styled.div`
+    font-size: 12px;
+    cursor: pointer;
+`
+
 
 
 interface WallTypes {
@@ -92,6 +97,11 @@ const WallPost: React.FC<WallTypes> = (props) => {
         setAction('DISLIKE');
     };
 
+
+    const onClickTt = () => {
+        console.log('weqwewqewqe')
+    }
+
     const actions = [
         <Tooltip key="comment-basic-like" title="Like">
         {action === 'LIKE' ?
@@ -119,6 +129,7 @@ const WallPost: React.FC<WallTypes> = (props) => {
                 </span>
             }
         </Tooltip>,
+        <ListLikesLink>Список</ListLikesLink>
     ];
     
 
