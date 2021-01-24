@@ -5,6 +5,7 @@ import RegPage from './components/AuthReg/Reg'
 import EditProfilePage from './components/EditProfilePage/EditProfile'
 import ChartsPage from './components/ChartsPage/Charts'
 import ProfilesPage from './components/ProilesPage/Profiles'
+import LcPage from './components/LikesCommentsPage/Lpage'
 import Preloader from './components/Preloader'
 import ProtectedRoute from './containers/ProtectedRoute'
 import { verifyRequest } from './actions/auth'
@@ -68,6 +69,13 @@ const App: React.FC = () => {
             exact
             path="/profile/:id"
             Component={ProfilesPage}
+            isAuthenticated={authState}
+            isVerifying={verifyState}
+          />
+          <ProtectedRoute 
+            exact 
+            path="/comment/:id"
+            Component={LcPage}
             isAuthenticated={authState}
             isVerifying={verifyState}
           />

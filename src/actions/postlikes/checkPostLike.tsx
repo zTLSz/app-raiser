@@ -61,7 +61,7 @@ export function* sagaCheckPostLike(action: { payload: PostLikeTypes, type: strin
 
 
 async function checkLike(payload: PostLikeTypes) {
-  const { postid, authorid, authorname, userid, likes } = payload
+  const { postid, authorid, userid } = payload
 
   const likeinfo = await db.collection("userwall")
                         .doc(`${userid}`).collection("posts")

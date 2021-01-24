@@ -8,6 +8,7 @@ import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-d
 import { Link } from 'react-router-dom';
 import { requestSetPostLike } from '../../../actions/postlikes/setPostLike' 
 import { requestDeletePostLike } from '../../../actions/postlikes/deletePostLike'
+import { Route, Switch, useHistory } from "react-router-dom";
 
 
 
@@ -41,6 +42,9 @@ const CommentWrap = styled.div`
 const ListLikesLink = styled.div`
     font-size: 12px;
     cursor: pointer;
+    a {
+        color: rgba(0, 0, 0, 0.45);
+    }
 `
 
 
@@ -53,11 +57,14 @@ interface WallTypes {
 }
 
 
+/* <ListLikesLink onClick={() => history.push('as/test')}>Список</ListLikesLink> */
+
 
 const WallPost: React.FC<WallTypes> = (props) => {
 
     const { post, author, name, user } = props;
     const dispatch = useDispatch();
+    const history = useHistory();
     const [likes, setLikes] = useState(post.likes);
     const [dislikes, setDislikes] = useState(post.dislikes);
     const [action, setAction] = useState(post.isLikedByCurrentUser);
@@ -98,10 +105,6 @@ const WallPost: React.FC<WallTypes> = (props) => {
     };
 
 
-    const onClickTt = () => {
-        console.log('weqwewqewqe')
-    }
-
     const actions = [
         <Tooltip key="comment-basic-like" title="Like">
         {action === 'LIKE' ?
@@ -129,13 +132,16 @@ const WallPost: React.FC<WallTypes> = (props) => {
                 </span>
             }
         </Tooltip>,
-        <ListLikesLink>Список</ListLikesLink>
+        <ListLikesLink>
+            <Link to={`/comment/${post.postId}`}>Список</Link>
+        </ListLikesLink>
     ];
     
 
 
 
     return (
+        <>
         <CommentWrap>
             <Comment
                 actions={actions}
@@ -151,7 +157,16 @@ const WallPost: React.FC<WallTypes> = (props) => {
                     </Tooltip>
                 }
                 />
+
         </CommentWrap>
+        </>
+    )
+}
+
+
+const Test22: React.FC<WallTypes> = (props) => { 
+    return(
+        <div>123213</div>
     )
 }
 
