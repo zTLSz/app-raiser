@@ -133,7 +133,7 @@ const WallPost: React.FC<WallTypes> = (props) => {
             }
         </Tooltip>,
         <ListLikesLink>
-            <Link to={`/comment/${post.postId}`}>Список</Link>
+            <Link to={`/comment/${user}/${post.postId}`}>Список</Link>
         </ListLikesLink>
     ];
     

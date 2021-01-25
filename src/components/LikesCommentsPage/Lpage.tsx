@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import TopMenu from '../TopMenu/TopmenuWrap';
 import { AuthTypes } from '../../reducers/authreducer';
-import { Layout, Row, Col, Typography, Button, Input, Avatar } from 'antd';
+import { Layout, Row, Col, Typography, Skeleton } from 'antd';
 import { requestGetPostLike } from '../../actions/postlikes/getPostLike';
 import { GetPostLikeTypes } from '../../reducers/getpostlikereducer';
 import { useParams } from 'react-router-dom'
+import { Link } from "react-router-dom";
   
 
 
@@ -19,6 +20,15 @@ const { Content } = Layout;
 const TitleWrap = styled.div`
     margin-bottom: 40px;
     text-align: center;
+`
+
+const ProfileItem = styled.div`
+    font-size: 16px;
+    margin-bottom: 10px;
+
+    a {
+        color: rgba(0, 0, 0, 0.45);
+    }
 `
 
 
@@ -35,6 +45,20 @@ interface LikeState {
 }
 
 
+function ProfileLink(props: { item: any }) {
+
+    const { item } = props;
+
+    return(
+        <ProfileItem>
+            <Link to={`/profile/${item.id}`}>
+                {item.name}
+            </Link>
+        </ProfileItem>
+    )
+}
+
+
 const LcPage: React.FC<LCPageTypes> = () => {
 
     const dispatch = useDispatch();
@@ -46,17 +70,17 @@ const LcPage: React.FC<LCPageTypes> = () => {
 
     
     useEffect(() => {
-        dispatch(requestGetPostLike(params.id, userCounter))
+        dispatch(requestGetPostLike(params.id, params.u))
     }, [])
     
 
     if (likeslist.data.length > 0) {
         likes = likeslist.data
                 .filter((item: any) => item.type === 'LIKE')
-                .map((item: any, i: number) => <div key={i}>{item.name}</div>)
+                .map((item: any, i: number) => <ProfileLink key={i} item={item} />)
         dislikes = likeslist.data
-            .filter((item: any) => item.type === 'DISLIKE')
-            .map((item: any, i: number) => <div key={i}>{item.name}</div>)
+                .filter((item: any) => item.type === 'DISLIKE')
+                .map((item: any, i: number) => <ProfileLink key={i} item={item} />)
     }
 
     return (
@@ -72,7 +96,10 @@ const LcPage: React.FC<LCPageTypes> = () => {
                                     <Title>
                                         Likes
                                     </Title>
-                                    {likes}
+                                    {likeslist.isLoading ?
+                                        <Skeleton active /> :
+                                        likes
+                                    }
                                 </TitleWrap>
                         </Col>
                         <Col xs={{offset: 1, span: 23}} 
@@ -82,7 +109,10 @@ const LcPage: React.FC<LCPageTypes> = () => {
                                     <Title>
                                         Dislikes
                                     </Title>
-                                    {dislikes}
+                                    {likeslist.isLoading ?
+                                        <Skeleton active /> :
+                                        dislikes
+                                    }
                                 </TitleWrap>
                         </Col>
                     </Row>

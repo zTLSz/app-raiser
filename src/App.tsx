@@ -74,7 +74,7 @@ const App: React.FC = () => {
           />
           <ProtectedRoute 
             exact 
-            path="/comment/:id"
+            path="/comment/:u/:id"
             Component={LcPage}
             isAuthenticated={authState}
             isVerifying={verifyState}

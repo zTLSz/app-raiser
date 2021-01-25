@@ -5,7 +5,7 @@ import WallPost from './Post'
 import AddPost from './AddPost'
 import { GetWallTypes } from '../../../reducers/getwallposts'
 import { AddWallTypes } from '../../../reducers/addwallpost'
-import { Layout, Typography, Button, Input } from 'antd';
+import { Layout, Typography, Skeleton } from 'antd';
 import { requestGetWallPosts } from '../../../actions/getWallPosts'
 
 const { Title, Text } = Typography;
@@ -75,7 +75,14 @@ const Wall: React.FC<WallTypes> = (props) => {
             </TitleWrap>
             <AddWallPost>
                 <AddPost user={user} author={author} name={name}/>
-                {postItems}
+                {walldata.isLoading ?
+                    <Skeleton active /> :
+                    postItems
+                }
+                {
+                    walldata.isError ?
+                    'Что-то пошло не так!' : ''
+                }
             </AddWallPost>
         </>
     )

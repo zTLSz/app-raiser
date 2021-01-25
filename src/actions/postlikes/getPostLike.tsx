@@ -61,6 +61,7 @@ async function getLike(payload: PostLikeTypes) {
                         .doc(`${userid}`).collection("posts")
                         .doc(postid).collection('likes').get()
 
+  console.log(likeinfo.docs.map(doc => doc.data()))
   return likeinfo.docs.map(doc => doc.data())
 
 }
