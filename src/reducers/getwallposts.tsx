@@ -1,6 +1,7 @@
 import {
     GET_WALL_POSTS_REQUEST,
     GET_WALL_POSTS_SUCCESS,
+    GET_WALL_POSTS_SUCCESS_NEXT,
     GET_WALL_POSTS_FAILURE,
   } from "../actions/getWallPosts";
 
@@ -25,7 +26,7 @@ export interface GetWallTypes {
 
     
 
-export function getWallPostsReducer(state = initialState, action: { type: string, payload?: object }) {
+export function getWallPostsReducer(state = initialState, action: { type: string, payload?: any }) {
     switch(action.type) {
         case GET_WALL_POSTS_REQUEST:
             return {
@@ -35,6 +36,7 @@ export function getWallPostsReducer(state = initialState, action: { type: string
                     errorCode: ''
                 };
         case GET_WALL_POSTS_SUCCESS:
+            console.log(action.payload)
             return {
                     ...state,
                     isLoading: false,
@@ -42,6 +44,14 @@ export function getWallPostsReducer(state = initialState, action: { type: string
                     errorCode: '',
                     postsdata: action.payload
                 };
+        case GET_WALL_POSTS_SUCCESS_NEXT: 
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+                errorCode: '',
+                postsdata: [ ...state.postsdata, ...action.payload ]
+            }
         case GET_WALL_POSTS_FAILURE:
             return {
                     ...state,

@@ -7,22 +7,31 @@ import { getCurrentUserWall } from './getCurrentUserWall'
 
 export const GET_WALL_POSTS_REQUEST = "GET_WALL_POSTS_REQUEST";
 export const GET_WALL_POSTS_SUCCESS = "GET_WALL_POSTS_SUCCESS";
+export const GET_WALL_POSTS_SUCCESS_NEXT = "GET_WALL_POSTS_SUCCESS_NEXT";
 export const GET_WALL_POSTS_FAILURE = "GET_WALL_POSTS_FAILURE";
 
 
 
 
 
-export const requestGetWallPosts = (counter: number, author: number) => {
+export const requestGetWallPosts = (counter: number, author: number, page?: number) => {
   return {
     type: GET_WALL_POSTS_REQUEST,
-    payload: { counter: counter, author: author }
+    payload: { counter: counter, author: author, page: page }
   };
 };
 
 export const receiveGetWallPosts = (data: any) => {
   return {
     type: GET_WALL_POSTS_SUCCESS,
+    payload: data
+  };
+};
+
+
+export const receiveGetWallPostsNext = (data: any) => {
+  return {
+    type: GET_WALL_POSTS_SUCCESS_NEXT,
     payload: data
   };
 };
@@ -36,16 +45,22 @@ export const getWallPostsError = (error: { code: string, message: string, a: nul
 
 interface GetWallTypes {
   counter: number,
-  author: number
+  author: number,
+  page?: number
 }
 
 
 export function* sagaGetWallPostsWorker(action: { payload: GetWallTypes, type: string }) {
-    const { counter, author } = action.payload
+    const { counter, author, page } = action.payload
+
 
     try {
-      const posts = yield call(() => getCurrentUserWall(counter, author))
-      yield put(receiveGetWallPosts(posts))
+      const posts = yield call(() => getCurrentUserWall(counter, author, page))
+      if (page) {
+        yield put(receiveGetWallPostsNext(posts))
+      } else  {
+        yield put(receiveGetWallPosts(posts))
+      }
     } catch (e) {
       yield put(getWallPostsError(e))
     }

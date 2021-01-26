@@ -5,7 +5,7 @@ import WallPost from './Post'
 import AddPost from './AddPost'
 import { GetWallTypes } from '../../../reducers/getwallposts'
 import { AddWallTypes } from '../../../reducers/addwallpost'
-import { Layout, Typography, Skeleton } from 'antd';
+import { Layout, Typography, Skeleton, Button } from 'antd';
 import { requestGetWallPosts } from '../../../actions/getWallPosts'
 
 const { Title, Text } = Typography;
@@ -82,6 +82,15 @@ const Wall: React.FC<WallTypes> = (props) => {
                 {
                     walldata.isError ?
                     'Что-то пошло не так!' : ''
+                }
+                {
+                    !walldata.isLoading &&
+                    !walldata.isError ?
+                    <Button type="dashed" block
+                        onClick={() => dispatch(requestGetWallPosts(user, author, posts[posts.length - 1].date))}
+                    >
+                        Еще
+                    </Button> : ''
                 }
             </AddWallPost>
         </>

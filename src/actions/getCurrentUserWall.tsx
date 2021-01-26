@@ -1,13 +1,20 @@
 import { TrophyOutlined } from "@ant-design/icons";
 import { db } from "../firebase/firebase";
 
-export async function getCurrentUserWall(usercounter: number, currentUser: number) {
+export async function getCurrentUserWall(usercounter: number, currentUser: number, page?: number) {
     let responsearray: any[] = [];
     let isLikedByCurrentUser;
     const postRef = db.collection("userwall").doc(`${usercounter}`).collection('posts')
-    const response = await postRef.orderBy("date", "desc").limit(5).get();
+    let response: any;
 
-    response.forEach((doc) => {
+
+    if (page) {
+      response = await postRef.orderBy("date", "desc").startAfter(page).limit(5).get();
+    } else {
+      response = await postRef.orderBy("date", "desc").limit(5).get();
+    }
+
+    response.forEach((doc: any) => {
       responsearray.push({ ...doc.data(), postId: doc.id })
     });
 
@@ -25,6 +32,7 @@ export async function getCurrentUserWall(usercounter: number, currentUser: numbe
     }
 
 
+    console.log(responsearray)
 
     return responsearray;
 }
