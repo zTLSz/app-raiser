@@ -46,7 +46,7 @@ const Wall: React.FC<WallTypes> = (props) => {
     const walldata = useSelector((state: PostsStateTypes) => state.wallposts)
     
     const posts = walldata.postsdata;
-    let postItems;
+    let postItems: any[] = [];
 
     if (posts.length > 0) {
         postItems = posts.map((post, i) => <WallPost key={i} 
@@ -65,7 +65,6 @@ const Wall: React.FC<WallTypes> = (props) => {
 
 
 
-
     return (
         <>
             <TitleWrap>
@@ -76,7 +75,11 @@ const Wall: React.FC<WallTypes> = (props) => {
             <AddWallPost>
                 <AddPost user={user} author={author} name={name}/>
                 {walldata.isLoading ?
-                    <Skeleton active /> :
+                    <>
+                        {postItems}
+                        <Skeleton active /> 
+                    </>
+                    :
                     postItems
                 }
                 {
