@@ -9,6 +9,7 @@ import { sagaGetWallPostsWorker, GET_WALL_POSTS_REQUEST } from '../getWallPosts'
 import { sagaSetPostLike,  SET_POST_LIKE_REQUEST} from '../postlikes/setPostLike'
 import { sagaDeletePostLike,  REMOVE_POST_LIKE_REQUEST} from '../postlikes/deletePostLike'
 import { sagaGetPostLike, GET_POST_LIKE_REQUEST } from '../postlikes/getPostLike'
+import { sagaSubscribeUser, SUBSCRIBE_USER_REQUEST } from '../subscribe/subscribeUser'
 
 
 export function* rootSaga() {
@@ -24,4 +25,5 @@ export function* rootSaga() {
     yield takeEvery(SET_POST_LIKE_REQUEST, sagaSetPostLike)
     yield takeEvery(REMOVE_POST_LIKE_REQUEST, sagaDeletePostLike)
     yield takeEvery(GET_POST_LIKE_REQUEST, sagaGetPostLike)
+    yield takeEvery(SUBSCRIBE_USER_REQUEST, sagaSubscribeUser)
 }

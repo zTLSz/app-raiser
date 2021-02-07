@@ -6,8 +6,9 @@ import { ProfileDataTypes } from '../../reducers/getprofilereducer'
 import { AuthTypes } from '../../reducers/authreducer'
 import Loader from '../Preloader'
 import { requestGetProfile } from '../../actions/getProfile' 
+import { requestSubscribeUser } from '../../actions/subscribe/subscribeUser'
 import Wall from '../modules/wall/Wall'
-import { Layout, Row, Col, Typography, Avatar } from 'antd';
+import { Layout, Row, Col, Typography, Avatar, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Redirect } from 'react-router'
 
@@ -40,6 +41,12 @@ const SubscribeWrap = styled.div`
 const SubscribeItem = styled.div`
 
 `
+
+
+const SubscribeButton = styled.div`
+    margin-top: 10px;
+`
+
 
 
 interface PageTypes {
@@ -105,6 +112,7 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
         <div>
             <TopMenu activeEl={''}/>
             <Layout className={'layout'}>
+                {console.log(profileinfo)}
                 <Content>
                     <Row>
                         <Col xs={{offset: 1, span: 23}} 
@@ -131,6 +139,13 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
                                         <Title level={5}>Подписки</Title>
                                     </SubscribeItem>
                                 </SubscribeWrap>
+                                <SubscribeButton>
+                                    <Button type="primary" block
+                                        onClick={() => dispatch(requestSubscribeUser(userCounter, userName, match.params.id, profileinfo.info.nickname))}
+                                    >
+                                            Подписаться
+                                    </Button>
+                                </SubscribeButton>
                         </Col>
                         <Col xs={{offset: 1, span: 23}} 
                             xl={{offset: 1, span: 11}} 

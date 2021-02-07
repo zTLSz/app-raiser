@@ -39,7 +39,6 @@ const SubscribeItem = styled.div`
 
 `
 
-
 interface MainPageTypes {
 
 }
