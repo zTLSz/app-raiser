@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux'
 import TopMenu from '../TopMenu/TopmenuWrap'
 import { ProfileDataTypes } from '../../reducers/getprofilereducer'
+import { SubscribeUserTypes } from '../../reducers/subscribeuserreducer'
 import { AuthTypes } from '../../reducers/authreducer'
 import Loader from '../Preloader'
 import { requestGetProfile } from '../../actions/getProfile' 
 import { requestSubscribeUser } from '../../actions/subscribe/subscribeUser'
+import { requestCheckSubscribeUser } from '../../actions/subscribe/chechSubscribeUser'
 import Wall from '../modules/wall/Wall'
 import { Layout, Row, Col, Typography, Avatar, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
@@ -58,7 +60,8 @@ interface PageTypes {
 }
 
 interface ProfilesState {
-    currprofile: ProfileDataTypes
+    currprofile: ProfileDataTypes,
+    subscribeuser: SubscribeUserTypes
 }
 
 interface AuthState {
@@ -70,12 +73,14 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
 
     const dispatch = useDispatch();
     const profileinfo = useSelector((state: ProfilesState) => state.currprofile)
+    const subscribeinfo = useSelector((state: ProfilesState) => state.subscribeuser)
     const userCounter = useSelector((state: AuthState) => state.auth.counter)
     const userName = useSelector((state: AuthState) => state.auth.info.nickname)
     const { match } = props;
 
     useEffect(() => {
         dispatch(requestGetProfile(match.params.id))
+        dispatch(requestCheckSubscribeUser(userCounter, match.params.id))
     }, [match.params.id])
 
     if (profileinfo.isLoading) {
@@ -112,7 +117,6 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
         <div>
             <TopMenu activeEl={''}/>
             <Layout className={'layout'}>
-                {console.log(profileinfo)}
                 <Content>
                     <Row>
                         <Col xs={{offset: 1, span: 23}} 
@@ -140,11 +144,19 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
                                     </SubscribeItem>
                                 </SubscribeWrap>
                                 <SubscribeButton>
-                                    <Button type="primary" block
+                                    {
+                                        subscribeinfo.isSubscribe ?  
+                                            <Button type="primary" block
+                                            >
+                                                    Отписаться
+                                            </Button>
+                                        : 
+                                        <Button type="primary" block
                                         onClick={() => dispatch(requestSubscribeUser(userCounter, userName, match.params.id, profileinfo.info.nickname))}
-                                    >
-                                            Подписаться
-                                    </Button>
+                                        >
+                                                Подписаться
+                                        </Button>
+                                    }
                                 </SubscribeButton>
                         </Col>
                         <Col xs={{offset: 1, span: 23}} 

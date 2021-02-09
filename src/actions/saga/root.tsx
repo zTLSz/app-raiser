@@ -10,6 +10,7 @@ import { sagaSetPostLike,  SET_POST_LIKE_REQUEST} from '../postlikes/setPostLike
 import { sagaDeletePostLike,  REMOVE_POST_LIKE_REQUEST} from '../postlikes/deletePostLike'
 import { sagaGetPostLike, GET_POST_LIKE_REQUEST } from '../postlikes/getPostLike'
 import { sagaSubscribeUser, SUBSCRIBE_USER_REQUEST } from '../subscribe/subscribeUser'
+import { sagaCheckSubscribeUser, CHECK_SUBSCRIBE_USER_REQUEST } from '../subscribe/chechSubscribeUser'
 
 
 export function* rootSaga() {
@@ -26,4 +27,5 @@ export function* rootSaga() {
     yield takeEvery(REMOVE_POST_LIKE_REQUEST, sagaDeletePostLike)
     yield takeEvery(GET_POST_LIKE_REQUEST, sagaGetPostLike)
     yield takeEvery(SUBSCRIBE_USER_REQUEST, sagaSubscribeUser)
+    yield takeEvery(CHECK_SUBSCRIBE_USER_REQUEST, sagaCheckSubscribeUser)
 }
