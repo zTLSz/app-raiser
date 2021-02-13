@@ -9,6 +9,7 @@ import Loader from '../Preloader'
 import { requestGetProfile } from '../../actions/getProfile' 
 import { requestSubscribeUser } from '../../actions/subscribe/subscribeUser'
 import { requestCheckSubscribeUser } from '../../actions/subscribe/chechSubscribeUser'
+import { requestUnsubscribeUser } from '../../actions/subscribe/unsubscribeUser'
 import Wall from '../modules/wall/Wall'
 import { Layout, Row, Col, Typography, Avatar, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
@@ -146,13 +147,16 @@ const ProfilesPage: React.FC<PageTypes> = (props) => {
                                 <SubscribeButton>
                                     {
                                         subscribeinfo.isSubscribe ?  
-                                            <Button type="primary" block
-                                            >
-                                                    Отписаться
-                                            </Button>
+                                        <Button type="primary" block
+                                            onClick={() => dispatch(requestUnsubscribeUser(userCounter, userName, 
+                                                                                        match.params.id, profileinfo.info.nickname))}
+                                        >
+                                                Отписаться
+                                        </Button>
                                         : 
                                         <Button type="primary" block
-                                        onClick={() => dispatch(requestSubscribeUser(userCounter, userName, match.params.id, profileinfo.info.nickname))}
+                                            onClick={() => dispatch(requestSubscribeUser(userCounter, userName, 
+                                                                                        match.params.id, profileinfo.info.nickname))}
                                         >
                                                 Подписаться
                                         </Button>

@@ -12,6 +12,14 @@ import {
 } from '../actions/subscribe/chechSubscribeUser'
 
 
+import {
+    UNSUBSCRIBE_USER_REQUEST,
+    UNSUBSCRIBE_USER_SUCCESS,
+    UNSUBSCRIBE_USER_FAILURE,
+  } from '../actions/subscribe/unsubscribeUser';
+
+
+
 
   
 const initialState = {
@@ -47,6 +55,25 @@ export function subscribeUserReducer(state = initialState, action: { type: strin
                     isLoading: false,
                 };
         case SUBSCRIBE_USER_FAILURE:
+            return {
+                    ...state,
+                    isError: true,
+                    isLoading: false, 
+                    errorCode: action.payload
+                };
+        case UNSUBSCRIBE_USER_REQUEST:
+            return {
+                    ...state,
+                    isError: false,
+                    isLoading: true,
+                };
+        case UNSUBSCRIBE_USER_SUCCESS:
+            return {
+                    ...state,
+                    isError: false,
+                    isLoading: false,
+                };
+        case UNSUBSCRIBE_USER_FAILURE:
             return {
                     ...state,
                     isError: true,
