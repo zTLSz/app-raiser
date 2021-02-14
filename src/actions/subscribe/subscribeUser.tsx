@@ -1,6 +1,8 @@
 import { db } from "../../firebase/firebase";
 import { put, call, takeEvery } from 'redux-saga/effects'
 import firebase from 'firebase'
+import { requestCheckSubscribeUser } from './chechSubscribeUser'
+import { requestGetProfile } from '../getProfile'
 
 
 
@@ -53,6 +55,8 @@ export function* sagaSubscribeUser(action: { payload: SubscribeUserTypes, type: 
       const payload = yield call(() => requestSubscribeUser(subscribingUserId, subscribingUserName, subscribeTargetId, subscribeTargetName))
       yield call(() => addFollower(action.payload))
       yield call(() => addFollowing(action.payload))
+      yield put(requestCheckSubscribeUser(subscribingUserId, subscribeTargetId))
+      yield put(requestGetProfile(subscribeTargetId))
       yield put(receiveSubscribeUser(payload))
     } catch (e) {
       yield put(subscribeUserError(e))

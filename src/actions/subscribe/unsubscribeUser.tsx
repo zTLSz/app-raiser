@@ -1,6 +1,8 @@
 import { db } from "../../firebase/firebase";
 import { put, call, takeEvery } from 'redux-saga/effects'
 import firebase from 'firebase'
+import { requestCheckSubscribeUser } from './chechSubscribeUser'
+import { requestGetProfile } from '../getProfile'
 
 
 
@@ -53,6 +55,8 @@ export function* sagaUnsubscribeUser(action: { payload: UnsubscribeUserTypes, ty
       const payload = yield call(() => requestUnsubscribeUser(subscribingUserId, subscribingUserName, subscribeTargetId, subscribeTargetName))
       yield call(() => removeFollower(action.payload))
       yield call(() => removeFollowing(action.payload))
+      yield put(requestCheckSubscribeUser(subscribingUserId, subscribeTargetId))
+      yield put(requestGetProfile(subscribeTargetId))
       yield put(receiveUnsubscribeUser(payload))
     } catch (e) {
       yield put(unsubscribeUserError(e))

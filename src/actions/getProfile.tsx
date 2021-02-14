@@ -29,8 +29,10 @@ export const getProfileError = (error: { code: string, message: string, a: null 
 
 
 export function* sagaGetProfileWorker(action: {payload: {usercounter: number}, type: string}) {
-    const { usercounter } = action.payload
+    const { usercounter } = action.payload;
+    console.log(usercounter)
     try {
+      yield call(() => requestGetProfile(usercounter))
       const userinfo = yield call(() => getCurrentUserInfo(usercounter))
       yield put(receiveGetProfile(userinfo))
     } catch (e) {
