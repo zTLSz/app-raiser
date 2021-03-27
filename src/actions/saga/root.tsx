@@ -33,5 +33,6 @@ export function* rootSaga() {
     
     yield takeEvery(SUBSCRIBE_USER_REQUEST, sagaSubscribeUser)
     yield takeEvery(CHECK_SUBSCRIBE_USER_REQUEST, sagaCheckSubscribeUser)
+    yield takeEvery(CHECK_SUBSCRIBE_USER_REQUEST, sagaVerifyWorker)
     yield takeEvery(UNSUBSCRIBE_USER_REQUEST, sagaUnsubscribeUser)
 }

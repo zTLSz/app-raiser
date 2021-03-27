@@ -30,7 +30,7 @@ export const editProfileError = (error: { code: string, message: string, a: null
 };
 
 
-export function* sagaEditProfileWorker(action: {payload: {about: string, usercounter: number}, type: string}) {
+export function* sagaEditProfileWorker(action: {payload: {about: string, usercounter: number}, type: string}): Generator<any[], void, any>  {
     const { about, usercounter } = action.payload
     try {
       if (about.length < 3) {

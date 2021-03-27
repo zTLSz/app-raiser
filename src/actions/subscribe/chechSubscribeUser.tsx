@@ -38,8 +38,10 @@ interface CheckSubscribeUserTypes {
   subscribeTargetId: number, 
 }
 
+interface Generator<T, TReturn, TNext> {}
 
-export function* sagaCheckSubscribeUser(action: { payload: CheckSubscribeUserTypes, type: string }) {
+
+export function* sagaCheckSubscribeUser(action: { payload: CheckSubscribeUserTypes, type: string }): Generator<any[], void, any> {
     const { subscribingUserId, subscribeTargetId } = action.payload
 
     try {

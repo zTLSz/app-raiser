@@ -3,6 +3,8 @@ import { put, call, takeEvery } from 'redux-saga/effects'
 import firebase from 'firebase'
 import { requestCheckSubscribeUser } from './chechSubscribeUser'
 import { requestGetProfile } from '../getProfile'
+import { verifyRequest } from "../auth";
+import { getCurrentUserInfo } from '../getCurrentUserInfo'
 
 
 
@@ -47,8 +49,9 @@ interface SubscribeUserTypes {
     subscribeTargetName: string
 }
 
+interface Generator<T, TReturn, TNext> {}
 
-export function* sagaSubscribeUser(action: { payload: SubscribeUserTypes, type: string }) {
+export function* sagaSubscribeUser(action: { payload: SubscribeUserTypes, type: string }): Generator<any[], void, any> {
     const { subscribingUserId, subscribingUserName, subscribeTargetId, subscribeTargetName } = action.payload
 
     try {

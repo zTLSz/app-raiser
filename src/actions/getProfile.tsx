@@ -28,9 +28,12 @@ export const getProfileError = (error: { code: string, message: string, a: null 
 };
 
 
-export function* sagaGetProfileWorker(action: {payload: {usercounter: number}, type: string}) {
+
+interface Generator<T, TReturn, TNext> {}
+
+
+export function* sagaGetProfileWorker(action: {payload: {usercounter: number}, type: string}): Generator<any[], void, any> {
     const { usercounter } = action.payload;
-    console.log(usercounter)
     try {
       yield call(() => requestGetProfile(usercounter))
       const userinfo = yield call(() => getCurrentUserInfo(usercounter))

@@ -49,8 +49,10 @@ interface GetWallTypes {
   page?: number
 }
 
+interface Generator<T, TReturn, TNext> {}
 
-export function* sagaGetWallPostsWorker(action: { payload: GetWallTypes, type: string }) {
+
+export function* sagaGetWallPostsWorker(action: { payload: GetWallTypes, type: string }): Generator<any[], void, any> {
     const { counter, author, page } = action.payload
 
 

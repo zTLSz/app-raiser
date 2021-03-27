@@ -57,6 +57,7 @@ export const logoutError = (error: { code: string, message: string, a: null }) =
 };
 
 export const verifyRequest = () => {
+  console.log('STAARTED22222222222222231231321')
   return {
     type: VERIFY_REQUEST
   };
@@ -76,10 +77,12 @@ export const verifyError = (error: { code: string, message: string, a: null }) =
   };
 
 
+interface Generator<T, TReturn, TNext> {}
+
 // login
 // payload.user.uid
 
-export function* sagaLoginWorker(action: {payload: {e: string, p: string}, type: string}) {
+export function* sagaLoginWorker(action: {payload: {e: string, p: string}, type: string}): Generator<any[], void, any>  {
     try {
       const payload = yield call(() => fetchAuth(action.payload.e, action.payload.p))
       const usersystemdata = yield call(() => getCurrentUserCount(payload.user.uid))
@@ -112,7 +115,7 @@ async function getCurrentUserCount(uid: string) {
 // logout
 
 
-export function* sagaLogoutWorker(action: {payload: {e: string, p: string}, type: string}) {
+export function* sagaLogoutWorker(action: {payload: {e: string, p: string}, type: string}): Generator<any[], void, any>  {
     try {
       const payload = yield call(() => fetchLogout())
       yield put(receiveLogout())
@@ -142,7 +145,7 @@ function onAuthStateChanged() {
 }
 
 
-export function* sagaVerifyWorker(action: {payload: {e: string, p: string}, type: string}) {
+export function* sagaVerifyWorker(action: {payload: {e: string, p: string}, type: string}): Generator<any[], void, any>  {
     try {
       const payload = yield call(onAuthStateChanged)
       const usersystemdata = yield call(() => getCurrentUserCount(payload.uid))
