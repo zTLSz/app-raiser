@@ -4,6 +4,7 @@ import MainPage from './components/Main/Main'
 import RegPage from './components/AuthReg/Reg'
 import EditProfilePage from './components/EditProfilePage/EditProfile'
 import ChartsPage from './components/ChartsPage/Charts'
+import FriendsPage from './components/FriendsPage/Friends'
 import ProfilesPage from './components/ProilesPage/Profiles'
 import LcPage from './components/LikesCommentsPage/Lpage'
 import Preloader from './components/Preloader'
@@ -55,6 +56,13 @@ const App: React.FC = () => {
             exact
             path="/charts"
             Component={ChartsPage}
+            isAuthenticated={authState}
+            isVerifying={verifyState}
+          />
+          <ProtectedRoute
+            exact
+            path="/friends"
+            Component={FriendsPage}
             isAuthenticated={authState}
             isVerifying={verifyState}
           />

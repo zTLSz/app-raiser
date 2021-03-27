@@ -3,7 +3,7 @@ import styled, {createGlobalStyle} from 'styled-components';
 import 'antd/dist/antd.css';
 import { Menu } from 'antd';
 import { useDispatch } from 'react-redux'
-import { LogoutOutlined, AppstoreOutlined, EditOutlined, ProfileFilled } from '@ant-design/icons';
+import { LogoutOutlined, AppstoreOutlined, EditOutlined, ProfileFilled, BlockOutlined } from '@ant-design/icons';
 import { requestLogout } from '../../actions/auth'
 import { Link } from 'react-router-dom'
 
@@ -62,6 +62,11 @@ const TopMenu: React.FC<TopMenuTypes> = ({ activeEl }) => {
           <Menu.Item key="editprofile"  icon={<EditOutlined />}>
             <Link to="/editprofile">
               Редактировать профиль
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="friends" icon={<BlockOutlined />}>
+            <Link to="/friends">
+              Ваши друзья
             </Link>
           </Menu.Item>
           <Menu.Item key="logout" 
