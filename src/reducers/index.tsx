@@ -9,6 +9,7 @@ import { getWallPostsReducer } from './getwallposts'
 import { setPostLikeReducer } from './setpostlikereducer'
 import { getPostLikeReducer } from './getpostlikereducer'
 import { subscribeUserReducer } from './subscribeuserreducer'
+import { getSubscribeListReducer } from './getsubscribelistreducer'
 
 
 
@@ -23,7 +24,8 @@ export const rootReducer = combineReducers({
     wallposts: getWallPostsReducer,
     postrate: setPostLikeReducer,
     likeslist: getPostLikeReducer,
-    subscribeuser: subscribeUserReducer
+    subscribeuser: subscribeUserReducer,
+    subscribers: getSubscribeListReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>

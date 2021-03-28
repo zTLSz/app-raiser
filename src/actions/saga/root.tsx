@@ -12,6 +12,7 @@ import { sagaGetPostLike, GET_POST_LIKE_REQUEST } from '../postlikes/getPostLike
 import { sagaSubscribeUser, SUBSCRIBE_USER_REQUEST, SUBSCRIBE_USER_SUCCESS } from '../subscribe/subscribeUser'
 import { sagaCheckSubscribeUser, CHECK_SUBSCRIBE_USER_REQUEST } from '../subscribe/chechSubscribeUser'
 import { sagaUnsubscribeUser, UNSUBSCRIBE_USER_REQUEST, UNSUBSCRIBE_USER_SUCCESS } from '../subscribe/unsubscribeUser'
+import { sagaGetSubscribersList, GET_SUBSCRIBERS_LIST_REQUEST } from '../subscribe/getSubscribersList'
 
 
 export function* rootSaga() {
@@ -35,4 +36,5 @@ export function* rootSaga() {
     yield takeEvery(CHECK_SUBSCRIBE_USER_REQUEST, sagaCheckSubscribeUser)
     yield takeEvery(CHECK_SUBSCRIBE_USER_REQUEST, sagaVerifyWorker)
     yield takeEvery(UNSUBSCRIBE_USER_REQUEST, sagaUnsubscribeUser)
+    yield takeEvery(GET_SUBSCRIBERS_LIST_REQUEST, sagaGetSubscribersList)
 }

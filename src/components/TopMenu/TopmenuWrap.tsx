@@ -66,7 +66,7 @@ const TopMenu: React.FC<TopMenuTypes> = ({ activeEl }) => {
           </Menu.Item>
           <Menu.Item key="friends" icon={<BlockOutlined />}>
             <Link to="/friends">
-              Ваши друзья
+              Мои друзья
             </Link>
           </Menu.Item>
           <Menu.Item key="logout" 
