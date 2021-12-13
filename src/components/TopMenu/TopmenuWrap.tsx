@@ -1,21 +1,25 @@
-import React from 'react';
-import styled, {createGlobalStyle} from 'styled-components';
-import 'antd/dist/antd.css';
-import { Menu } from 'antd';
-import { useDispatch } from 'react-redux'
-import { LogoutOutlined, AppstoreOutlined, EditOutlined, ProfileFilled, BlockOutlined } from '@ant-design/icons';
-import { requestLogout } from '../../actions/auth'
-import { Link } from 'react-router-dom'
-
+import React from "react";
+import styled, { createGlobalStyle } from "styled-components";
+import "antd/dist/antd.css";
+import { Menu } from "antd";
+import { useDispatch } from "react-redux";
+import {
+  LogoutOutlined,
+  AppstoreOutlined,
+  EditOutlined,
+  ProfileFilled,
+  BlockOutlined,
+} from "@ant-design/icons";
+import { requestLogout } from "../../actions/auth";
+import { Link } from "react-router-dom";
 
 const { SubMenu } = Menu;
 
-
-const MenuWrap =  styled.menu`
+const MenuWrap = styled.menu`
   .menu-item__right {
     float: right;
   }
-`
+`;
 
 const GlobalMenuStyle = createGlobalStyle`
   menu {
@@ -33,54 +37,43 @@ const GlobalMenuStyle = createGlobalStyle`
   .ant-menu-dark.ant-menu-horizontal > .ant-menu-item:hover {
     background-color: #505050;
   }
-`
+`;
 
 interface TopMenuTypes {
-  activeEl: string
+  activeEl: string;
 }
-
 
 const TopMenu: React.FC<TopMenuTypes> = ({ activeEl }) => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-
-
-    return (
-      <MenuWrap>
-        <GlobalMenuStyle />
-        <Menu theme={'dark'} defaultSelectedKeys={[activeEl]} mode="horizontal">
-          <Menu.Item key="main" icon={<ProfileFilled />}>
-            <Link to="/">
-              Главная
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="charts"  icon={<AppstoreOutlined />}>
-            <Link to="/charts">
-              Чарты
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="editprofile"  icon={<EditOutlined />}>
-            <Link to="/editprofile">
-              Редактировать профиль
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="friends" icon={<BlockOutlined />}>
-            <Link to="/friends">
-              Мои друзья
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="logout" 
-              className="menu-item__right" 
-              icon={<LogoutOutlined />} 
-              onClick={() => dispatch(requestLogout())}>
-              Выход
-          </Menu.Item>
+  return (
+    <MenuWrap>
+      <GlobalMenuStyle />
+      <Menu theme={"dark"} defaultSelectedKeys={[activeEl]} mode="horizontal">
+        <Menu.Item key="main" icon={<ProfileFilled />}>
+          <Link to="/">Главная</Link>
+        </Menu.Item>
+        <Menu.Item key="charts" icon={<AppstoreOutlined />}>
+          <Link to="/charts">Чарты</Link>
+        </Menu.Item>
+        <Menu.Item key="editprofile" icon={<EditOutlined />}>
+          <Link to="/editprofile">Редактировать профиль</Link>
+        </Menu.Item>
+        <Menu.Item key="friends" icon={<BlockOutlined />}>
+          <Link to="/friends">Мои друзья</Link>
+        </Menu.Item>
+        <Menu.Item
+          key="logout"
+          className="menu-item__right"
+          icon={<LogoutOutlined />}
+          onClick={() => dispatch(requestLogout())}
+        >
+          Выход
+        </Menu.Item>
       </Menu>
     </MenuWrap>
-    )
-}
-
-
+  );
+};
 
 /*
 
@@ -97,4 +90,4 @@ const TopMenu: React.FC<TopMenuTypes> = ({ activeEl }) => {
 
 */
 
-export default TopMenu
+export default TopMenu;

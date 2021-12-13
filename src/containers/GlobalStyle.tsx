@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
     .layout {
@@ -6,4 +6,4 @@ export const GlobalStyle = createGlobalStyle`
         padding-bottom: 80px;
         min-height: 100vh;
     }
-`
+`;

@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { keyframes } from 'styled-components';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { keyframes } from "styled-components";
 import { Redirect, Link } from "react-router-dom";
 // import { loginUser } from '../actions/auth';
-import { Form, Input, Checkbox, Button, Typography, Row, Col } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux'
-import { requestLogin } from '../../actions/auth'
-import { AuthTypes } from '../../reducers/authreducer'
-import bg from '../../images/bglog.jpg'
-
+import { Form, Input, Checkbox, Button, Typography, Row, Col } from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { requestLogin } from "../../actions/auth";
+import { AuthTypes } from "../../reducers/authreducer";
+import bg from "../../images/bglog.jpg";
 
 const { Text } = Typography;
 const { Title } = Typography;
 
 const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
-  };
-  const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
-  };
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
 
 const opacity = keyframes`
   from {
@@ -31,7 +30,6 @@ const opacity = keyframes`
     opacity: 0.7,
   }
 `;
-
 
 const opacityhover = keyframes`
   from {
@@ -53,20 +51,17 @@ const opacitybig = keyframes`
   }
 `;
 
-
-
 const BgLogin = styled.div`
   position: fixed;
   top: -20px;
   bottom: -20px;
   left: -20px;
   right: -20px;
-  background: url(${bg}); 
+  background: url(${bg});
   background-position-x: center;
   background-position-y: center;
   filter: blur(12px);
-
-`
+`;
 
 const BgForm = styled.div`
   margin-top: 20vh;
@@ -94,8 +89,7 @@ const BgForm = styled.div`
   .ant-btn {
     margin-right: 10px;
   }
-`
-
+`;
 
 const LoginError = styled.div`
   animation-name: ${opacitybig};
@@ -105,93 +99,95 @@ const LoginError = styled.div`
   width: 400px;
   bottom: 45px;
 
-  @media(max-width: 500px) {
+  @media (max-width: 500px) {
     width: 100%;
     bottom: 44px;
     line-height: 13px;
   }
-`
-
-  
+`;
 
 interface StateAuthTypes {
-  auth: AuthTypes
+  auth: AuthTypes;
 }
 
 const LoginPage: React.FC = () => {
-    const [log, setLog] = useState<string>('');
-    const [pass, setPass] = useState<string>('');
-    const dispatch = useDispatch();
-    const authState = useSelector(( state: StateAuthTypes ) => state.auth.isAuthenticated)
-    const loginState = useSelector(( state: StateAuthTypes ) => state.auth)
+  const [log, setLog] = useState<string>("");
+  const [pass, setPass] = useState<string>("");
+  const dispatch = useDispatch();
+  const authState = useSelector(
+    (state: StateAuthTypes) => state.auth.isAuthenticated
+  );
+  const loginState = useSelector((state: StateAuthTypes) => state.auth);
 
-
-
-    if (authState) {
-      return (
-        <Redirect to="/" />
-      )
-    } else  {
-      return (
-        <>
+  if (authState) {
+    return <Redirect to="/" />;
+  } else {
+    return (
+      <>
         <BgLogin></BgLogin>
         <Row>
-            <Col 
-              xs={{span: 24, offset: 0}} 
-              sm={{span: 24, offset: 0}} 
-              xl={{span: 12, offset: 6}}
-              xxl={{span: 10, offset: 7}}
-            >
+          <Col
+            xs={{ span: 24, offset: 0 }}
+            sm={{ span: 24, offset: 0 }}
+            xl={{ span: 12, offset: 6 }}
+            xxl={{ span: 10, offset: 7 }}
+          >
             <BgForm>
-            <Form
-                {...layout}
-                name="basic"
-                initialValues={{ remember: true }}
-                >
+              <Form {...layout} name="basic" initialValues={{ remember: true }}>
                 <Title>App-raiser</Title>
                 <Form.Item
-                    label="Email"
-                    name="username"
-                    rules={[{ required: true, message: 'Введите почту!' }]}
+                  label="Email"
+                  name="username"
+                  rules={[{ required: true, message: "Введите почту!" }]}
                 >
-                    <Input onChange={(e) => setLog(e.target.value)}/>
+                  <Input onChange={(e) => setLog(e.target.value)} />
                 </Form.Item>
 
                 <Form.Item
-                    label="Пароль"
-                    name="password"
-                    rules={[{ required: true, message: 'Введите пароль!' }]}
+                  label="Пароль"
+                  name="password"
+                  rules={[{ required: true, message: "Введите пароль!" }]}
                 >
-                    <Input.Password onChange={(e) => setPass(e.target.value)} />
+                  <Input.Password onChange={(e) => setPass(e.target.value)} />
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" onClick={() => dispatch(requestLogin(log, pass))}>
-                        Войти
-                    </Button>
-                    <Link to='/reg'>
-                      <Button type="dashed">
-                          Регистрация
-                      </Button>
-                    </Link>
+                  <Button
+                    type="primary"
+                    onClick={() => dispatch(requestLogin(log, pass))}
+                  >
+                    Войти
+                  </Button>
+                  <Link to="/reg">
+                    <Button type="dashed">Регистрация</Button>
+                  </Link>
                 </Form.Item>
-                {loginState.loginError ? <LoginError>
-                                          <Text type="danger">
-                                            Произошла ошибка! Проверьте правильность данных.
-                                          </Text>
-                                        </LoginError> : ''}
-                {loginState.isLoggingIn ? <LoginError><Text strong>Загрузка, подождите...</Text></LoginError> : ''}
+                {loginState.loginError ? (
+                  <LoginError>
+                    <Text type="danger">
+                      Произошла ошибка! Проверьте правильность данных.
+                    </Text>
+                  </LoginError>
+                ) : (
+                  ""
+                )}
+                {loginState.isLoggingIn ? (
+                  <LoginError>
+                    <Text strong>Загрузка, подождите...</Text>
+                  </LoginError>
+                ) : (
+                  ""
+                )}
               </Form>
-                <QuestionCircleOutlined />
-              </BgForm>
-            </Col>
-          </Row>
-        </>
-      );
-    }
-}
-
+              <QuestionCircleOutlined />
+            </BgForm>
+          </Col>
+        </Row>
+      </>
+    );
+  }
+};
 
 // const LoginPage = Form.create({ name: 'normal_login' })(LoginPageChild);
 
-export default LoginPage
+export default LoginPage;

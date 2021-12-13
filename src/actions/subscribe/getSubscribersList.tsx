@@ -1,75 +1,77 @@
 import { db } from "../../firebase/firebase";
-import { put, call, takeEvery } from 'redux-saga/effects'
-import firebase from 'firebase'
-
-
+import { put, call, takeEvery } from "redux-saga/effects";
+import firebase from "firebase";
 
 export const GET_SUBSCRIBERS_LIST_REQUEST = "GET_SUBSCRIBERS_LIST_REQUEST";
 export const GET_SUBSCRIBERS_LIST_SUCCESS = "GET_SUBSCRIBERS_LIST_SUCCESS";
 export const GET_SUBSCRIBERS_LIST_FAILURE = "GET_SUBSCRIBERS_LIST_FAILURE";
 
-
-
-
-
-export const requestGetSubscribersList =  (userId: number) => {
+export const requestGetSubscribersList = (userId: number) => {
   return {
     type: GET_SUBSCRIBERS_LIST_REQUEST,
-    payload: { userId: userId }
+    payload: { userId: userId },
   };
 };
 
-export const receiveGetSubscribersList  = (data: any) => {
+export const receiveGetSubscribersList = (data: any) => {
   return {
     type: GET_SUBSCRIBERS_LIST_SUCCESS,
-    payload: data
+    payload: data,
   };
 };
 
-export const getSubscribersListError = (error: { code: string, message: string }) => {
+export const getSubscribersListError = (error: {
+  code: string;
+  message: string;
+}) => {
   return {
     type: GET_SUBSCRIBERS_LIST_FAILURE,
-    payload: error.code
+    payload: error.code,
   };
 };
 
 interface GetSubscribersUserTypes {
-  userId: number, 
+  userId: number;
 }
 
 interface Generator<T, TReturn, TNext> {}
 
+export function* sagaGetSubscribersList(action: {
+  payload: GetSubscribersUserTypes;
+  type: string;
+}): Generator<any[], void, any> {
+  const { userId } = action.payload;
 
-export function* sagaGetSubscribersList(action: { payload: GetSubscribersUserTypes, type: string }): Generator<any[], void, any> {
-    const { userId } = action.payload
-
-    try {
-      yield call(() => requestGetSubscribersList(userId))
-      const payload = yield call(() => getSubscribersList(action.payload))
-      yield put(receiveGetSubscribersList(payload))
-    } catch (e) {
-      yield put(getSubscribersListError(e))
-    }
+  try {
+    yield call(() => requestGetSubscribersList(userId));
+    const payload = yield call(() => getSubscribersList(action.payload));
+    yield put(receiveGetSubscribersList(payload));
+  } catch (e) {
+    yield put(getSubscribersListError(e));
+  }
 }
 
-
-
 async function getSubscribersList(payload: GetSubscribersUserTypes) {
-  const { userId } = payload
+  const { userId } = payload;
 
-  console.log(userId)
+  console.log(userId);
 
-  const test1: any = await db.collection("userinfo")
-                        .doc(`${userId}`).collection("followers").get()
-  
-  const test2: any = await db.collection("userinfo")
-                        .doc(`${userId}`).collection("following").get()
+  const test1: any = await db
+    .collection("userinfo")
+    .doc(`${userId}`)
+    .collection("followers")
+    .get();
 
-  console.log(test2.docs.map(doc => doc.data()))
-  
+  const test2: any = await db
+    .collection("userinfo")
+    .doc(`${userId}`)
+    .collection("following")
+    .get();
+
+  console.log(test2.docs.map((doc: any) => doc.data()));
+
   return {
-    followers: test1.docs.map(doc => doc.data()),
-    following: test2.docs.map(doc => doc.data())
+    followers: test1.docs.map((doc: any) => doc.data()),
+    following: test2.docs.map((doc: any) => doc.data()),
   };
-    
 }

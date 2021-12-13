@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { keyframes } from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { keyframes } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import { requestReg } from '../../actions/reg'
-import { Form, Input, Checkbox, Button, Typography, Row, Col } from 'antd';
-import bg from '../../images/bglog.jpg'
+import { requestReg } from "../../actions/reg";
+import { Form, Input, Checkbox, Button, Typography, Row, Col } from "antd";
+import bg from "../../images/bglog.jpg";
 
 const { Text } = Typography;
 const { Title } = Typography;
 
 const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
-  };
-  const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
-  };
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
 
 const opacity = keyframes`
   from {
@@ -27,7 +27,6 @@ const opacity = keyframes`
     opacity: 0.7,
   }
 `;
-
 
 const opacityhover = keyframes`
   from {
@@ -49,20 +48,17 @@ const opacitybig = keyframes`
   }
 `;
 
-
-
 const BgLogin = styled.div`
   position: fixed;
   top: -20px;
   bottom: -20px;
   left: -20px;
   right: -20px;
-  background: url(${bg}); 
+  background: url(${bg});
   background-position-x: center;
   background-position-y: center;
   filter: blur(12px);
-
-`
+`;
 
 const BgForm = styled.div`
   margin-top: 20vh;
@@ -91,13 +87,12 @@ const BgForm = styled.div`
     margin-right: 10px;
   }
 
-  @media(max-width: 500px) {
+  @media (max-width: 500px) {
     .ant-btn {
       margin-bottom: 10px;
     }
   }
-`
-
+`;
 
 const LoginError = styled.div`
   animation-name: ${opacitybig};
@@ -107,120 +102,127 @@ const LoginError = styled.div`
   width: 400px;
   bottom: 20px;
 
-  @media(max-width: 500px) {
+  @media (max-width: 500px) {
     width: 200px;
     bottom: 8px;
   }
-`
-
-
+`;
 
 interface RegTypes {
-  reg: RegStateTypes
-}  
+  reg: RegStateTypes;
+}
 
 interface RegStateTypes {
-  isReg: boolean,
-  isRegError: boolean, 
-  isLoading: boolean,
-  errorCode?: string
+  isReg: boolean;
+  isRegError: boolean;
+  isLoading: boolean;
+  errorCode?: string;
 }
 
 interface AuthTypes {
   auth: {
-    isAuthenticated: boolean
-  }
+    isAuthenticated: boolean;
+  };
 }
 
-
-
 const RegPage: React.FC = () => {
-    const [mail, setMail] = useState<string>('');
-    const [pass, setPass] = useState<string>('');
-    const [nickname, setNickname] = useState<string>('');
-    const dispatch = useDispatch();
-    const regState = useSelector(( state: RegTypes ) => state.reg)
-    const authState = useSelector(( state: AuthTypes ) => state.auth.isAuthenticated)
+  const [mail, setMail] = useState<string>("");
+  const [pass, setPass] = useState<string>("");
+  const [nickname, setNickname] = useState<string>("");
+  const dispatch = useDispatch();
+  const regState = useSelector((state: RegTypes) => state.reg);
+  const authState = useSelector(
+    (state: AuthTypes) => state.auth.isAuthenticated
+  );
 
-
-
-
-    if (authState) {
-      return (
-        <Redirect to="/" />
-      )
-    } else  {
-      return (
-        <>
+  if (authState) {
+    return <Redirect to="/" />;
+  } else {
+    return (
+      <>
         <BgLogin></BgLogin>
         <Row>
-            <Col 
-              xs={{span: 24, offset: 0}} 
-              sm={{span: 24, offset: 0}} 
-              xl={{span: 12, offset: 6}}
-              xxl={{span: 10, offset: 7}}
-            >
+          <Col
+            xs={{ span: 24, offset: 0 }}
+            sm={{ span: 24, offset: 0 }}
+            xl={{ span: 12, offset: 6 }}
+            xxl={{ span: 10, offset: 7 }}
+          >
             <BgForm>
-            <Form
-                {...layout}
-                name="basic"
-                initialValues={{ remember: true }}
-                >
+              <Form {...layout} name="basic" initialValues={{ remember: true }}>
                 <Title>Регистрация</Title>
                 <Form.Item
-                    label="Email"
-                    name="email"
-                    rules={[{ required: true, message: 'Введите почту!' }]}
+                  label="Email"
+                  name="email"
+                  rules={[{ required: true, message: "Введите почту!" }]}
                 >
-                    <Input onChange={(e) => setMail(e.target.value)}/>
+                  <Input onChange={(e) => setMail(e.target.value)} />
                 </Form.Item>
                 <Form.Item
-                    label="Пароль"
-                    name="password"
-                    rules={[{ required: true, message: 'Введите пароль!' }]}
+                  label="Пароль"
+                  name="password"
+                  rules={[{ required: true, message: "Введите пароль!" }]}
                 >
-                    <Input.Password onChange={(e) => setPass(e.target.value)} />
+                  <Input.Password onChange={(e) => setPass(e.target.value)} />
                 </Form.Item>
                 <Form.Item
-                    label="Ник"
-                    name="nick"
-                    rules={[{ required: true, message: 'Введите Никнейм!' }]}
+                  label="Ник"
+                  name="nick"
+                  rules={[{ required: true, message: "Введите Никнейм!" }]}
                 >
-                    <Input onChange={(e) => setNickname(e.target.value)} />
+                  <Input onChange={(e) => setNickname(e.target.value)} />
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" onClick={() => dispatch(requestReg(mail, pass, nickname))}>
-                        Зарегистрироваться
-                    </Button>
-                    <Link to='/login'>
-                      <Button type="dashed">
-                          К форме логина
-                      </Button>
-                    </Link>
+                  <Button
+                    type="primary"
+                    onClick={() => dispatch(requestReg(mail, pass, nickname))}
+                  >
+                    Зарегистрироваться
+                  </Button>
+                  <Link to="/login">
+                    <Button type="dashed">К форме логина</Button>
+                  </Link>
                 </Form.Item>
-                {regState.isRegError ? <LoginError>
-                                          <Text type="danger">Произошла ошибка!
-                                            {regState.errorCode === `auth/weak-password` ?
-                                              ` Пароль должен быть минимум 6 символов` : 
-                                            regState.errorCode === `auth/invalid-email` ?
-                                              ` Введите корректную почту` : 
-                                              ` Проверьте правильность данных`
-                                            }
-                                          </Text>
-                                        </LoginError> : ''}
-                {regState.isReg ? <LoginError><Text type="success">Успешная регистрация! Теперь вы можете зайти</Text></LoginError> : ''}
-                {regState.isLoading ? <LoginError><Text strong>Загрузка, подождите...</Text></LoginError> : ''}
+                {regState.isRegError ? (
+                  <LoginError>
+                    <Text type="danger">
+                      Произошла ошибка!
+                      {regState.errorCode === `auth/weak-password`
+                        ? ` Пароль должен быть минимум 6 символов`
+                        : regState.errorCode === `auth/invalid-email`
+                        ? ` Введите корректную почту`
+                        : ` Проверьте правильность данных`}
+                    </Text>
+                  </LoginError>
+                ) : (
+                  ""
+                )}
+                {regState.isReg ? (
+                  <LoginError>
+                    <Text type="success">
+                      Успешная регистрация! Теперь вы можете зайти
+                    </Text>
+                  </LoginError>
+                ) : (
+                  ""
+                )}
+                {regState.isLoading ? (
+                  <LoginError>
+                    <Text strong>Загрузка, подождите...</Text>
+                  </LoginError>
+                ) : (
+                  ""
+                )}
               </Form>
-              </BgForm>
-            </Col>
-          </Row>
-        </>
-      );
-    }
-}
-
+            </BgForm>
+          </Col>
+        </Row>
+      </>
+    );
+  }
+};
 
 // const LoginPage = Form.create({ name: 'normal_login' })(LoginPageChild);
 
-export default RegPage
+export default RegPage;

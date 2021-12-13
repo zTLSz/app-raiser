@@ -1,12 +1,11 @@
-import { createStore, compose, applyMiddleware } from 'redux'
-import { rootReducer } from '../reducers'
+import { createStore, compose, applyMiddleware } from "redux";
+import { rootReducer } from "../reducers";
 import { verifyRequest } from "../actions/auth";
-import createSagaMiddleware from 'redux-saga'
-import logger from 'redux-logger'
-import { rootSaga } from '../actions/saga/root'
+import createSagaMiddleware from "redux-saga";
+import logger from "redux-logger";
+import { rootSaga } from "../actions/saga/root";
 
-const sagaMiddleware = createSagaMiddleware()
-
+const sagaMiddleware = createSagaMiddleware();
 
 export default function configureStore() {
   const store = createStore(
@@ -18,6 +17,4 @@ export default function configureStore() {
   return store;
 }
 
-
-
-export const store = configureStore()
+export const store = configureStore();
