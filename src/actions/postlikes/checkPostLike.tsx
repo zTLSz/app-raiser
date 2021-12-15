@@ -53,7 +53,7 @@ interface PostLikeTypes {
 export function* sagaCheckPostLike(action: {
   payload: PostLikeTypes;
   type: string;
-}) {
+}): Generator {
   const { postid, authorid, authorname, userid, likes } = action.payload;
 
   try {

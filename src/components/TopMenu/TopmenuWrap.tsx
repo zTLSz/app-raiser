@@ -53,9 +53,6 @@ const TopMenu: React.FC<TopMenuTypes> = ({ activeEl }) => {
         <Menu.Item key="main" icon={<ProfileFilled />}>
           <Link to="/">Главная</Link>
         </Menu.Item>
-        <Menu.Item key="charts" icon={<AppstoreOutlined />}>
-          <Link to="/charts">Чарты</Link>
-        </Menu.Item>
         <Menu.Item key="editprofile" icon={<EditOutlined />}>
           <Link to="/editprofile">Редактировать профиль</Link>
         </Menu.Item>
@@ -76,6 +73,10 @@ const TopMenu: React.FC<TopMenuTypes> = ({ activeEl }) => {
 };
 
 /*
+
+        <Menu.Item key="charts" icon={<AppstoreOutlined />}>
+          <Link to="/charts">Чарты</Link>
+        </Menu.Item>
 
           <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Navigation Three - Submenu">
             <Menu.ItemGroup title="Item 1">

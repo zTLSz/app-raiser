@@ -55,7 +55,7 @@ interface AddWallTypes {
 export function* sagaAddWallPostWorker(action: {
   payload: AddWallTypes;
   type: string;
-}) {
+}): Generator {
   const { text, date, counter, author, name } = action.payload;
 
   try {
@@ -68,7 +68,7 @@ export function* sagaAddWallPostWorker(action: {
     yield call(() => addPost(action.payload));
     yield put(requestGetWallPosts(counter, author));
     yield put(receiveAddWallPost(payload));
-  } catch (e) {
+  } catch (e: any) {
     yield put(addWallPostError(e));
   }
 }
