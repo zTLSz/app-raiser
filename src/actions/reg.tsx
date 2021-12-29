@@ -27,10 +27,10 @@ export const receiveReg = (data: any) => {
   };
 };
 
-export const regError = (error: any) => {
+export const regError = (code: string | number) => {
   return {
     type: REG_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 

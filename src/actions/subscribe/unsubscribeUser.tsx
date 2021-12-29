@@ -32,10 +32,10 @@ export const receiveUnsubscribeUser = (data: any) => {
   };
 };
 
-export const unsubscribeUserError = (error: any) => {
+export const unsubscribeUserError = (code: string | number) => {
   return {
     type: UNSUBSCRIBE_USER_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 

@@ -19,10 +19,10 @@ export const receiveGetProfile = (userinfo: any) => {
   };
 };
 
-export const getProfileError = (error: any) => {
+export const getProfileError = (code: string | number) => {
   return {
     type: GET_PROFILE_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 

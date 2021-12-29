@@ -20,10 +20,10 @@ export const receiveGetPostLike = (data: any) => {
   };
 };
 
-export const getPostLikeError = (error: any) => {
+export const getPostLikeError = (code: string | number) => {
   return {
     type: GET_POST_LIKE_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 

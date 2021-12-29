@@ -28,14 +28,10 @@ export const receiveLogin = (user: any, usercounter: number, userinfo: any) => {
   };
 };
 
-export const loginError = (error: {
-  code: string;
-  message: string;
-  a: null;
-}) => {
+export const loginError = (code: string | number) => {
   return {
     type: LOGIN_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 
@@ -51,10 +47,10 @@ export const receiveLogout = () => {
   };
 };
 
-export const logoutError = (error: any) => {
+export const logoutError = (code: string | number) => {
   return {
     type: LOGOUT_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 
@@ -70,10 +66,10 @@ export const verifySuccess = () => {
   };
 };
 
-export const verifyError = (error: any) => {
+export const verifyError = (code: string | number) => {
   return {
     type: VERIFY_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 

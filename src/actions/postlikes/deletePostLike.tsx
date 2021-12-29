@@ -34,10 +34,10 @@ export const receiveDeletePostLike = (data: any) => {
   };
 };
 
-export const deletePostLikeError = (error: any) => {
+export const deletePostLikeError = (code: string | number) => {
   return {
     type: REMOVE_POST_LIKE_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 

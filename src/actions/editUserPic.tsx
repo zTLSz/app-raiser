@@ -21,10 +21,10 @@ export const receiveEditPicProfile = (data: any, userinfo: any) => {
   };
 };
 
-export const editProfilePicError = (error: any) => {
+export const editProfilePicError = (code: string | number) => {
   return {
     type: USER_PIC_EDIT_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 

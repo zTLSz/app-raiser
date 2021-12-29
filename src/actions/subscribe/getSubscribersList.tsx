@@ -20,10 +20,10 @@ export const receiveGetSubscribersList = (data: any) => {
   };
 };
 
-export const getSubscribersListError = (error: any) => {
+export const getSubscribersListError = (code: string | number) => {
   return {
     type: GET_SUBSCRIBERS_LIST_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 

@@ -33,13 +33,10 @@ export const receiveCheckPostLike = (data: any) => {
   };
 };
 
-export const checkPostLikeError = (error: {
-  code: string;
-  message: string;
-}) => {
+export const checkPostLikeError = (code: string | number) => {
   return {
     type: CHECK_POST_LIKE_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 
@@ -49,11 +46,6 @@ interface PostLikeTypes {
   authorname: string;
   userid: number;
   likes: number;
-}
-
-interface IError {
-  code: string;
-  message: string;
 }
 
 export function* sagaCheckPostLike(action: {
@@ -68,8 +60,10 @@ export function* sagaCheckPostLike(action: {
     );
     yield call(() => checkLike(action.payload));
     yield put(receiveCheckPostLike(payload));
-  } catch (error: any) {
-    yield put(checkPostLikeError(error));
+  } catch (error) {
+    if (error.code) {
+      yield put(checkPostLikeError(error.code));
+    }
   }
 }
 

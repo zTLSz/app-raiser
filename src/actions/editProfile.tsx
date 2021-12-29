@@ -21,10 +21,10 @@ export const receiveEditProfile = (data: any, userinfo: any) => {
   };
 };
 
-export const editProfileError = (error: any) => {
+export const editProfileError = (code: string | number) => {
   return {
     type: USER_EDIT_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 

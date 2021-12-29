@@ -34,10 +34,10 @@ export const receiveSubscribeUser = (data: any) => {
   };
 };
 
-export const subscribeUserError = (error: any) => {
+export const subscribeUserError = (code: string | number) => {
   return {
     type: SUBSCRIBE_USER_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 

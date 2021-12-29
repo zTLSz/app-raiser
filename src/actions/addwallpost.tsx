@@ -33,14 +33,10 @@ export const receiveAddWallPost = (data: any) => {
   };
 };
 
-export const addWallPostError = (error: {
-  code: string;
-  message: string;
-  a: null;
-}) => {
+export const addWallPostError = (code: string | number) => {
   return {
     type: ADD_WALL_POST_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 

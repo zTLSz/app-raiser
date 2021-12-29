@@ -36,10 +36,10 @@ export const receiveSetPostLike = (data: any) => {
   };
 };
 
-export const setPostLikeError = (error: any) => {
+export const setPostLikeError = (code: string | number) => {
   return {
     type: SET_POST_LIKE_FAILURE,
-    payload: error.code,
+    payload: code,
   };
 };
 
