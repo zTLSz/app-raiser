@@ -27,7 +27,7 @@ export const receiveReg = (data: any) => {
   };
 };
 
-export const regError = (error: { code: string; message: string; a: null }) => {
+export const regError = (error: any) => {
   return {
     type: REG_FAILURE,
     payload: error.code,
@@ -43,7 +43,7 @@ export const redirectReg = () => {
 export function* sagaRegWorker(action: {
   payload: { e: string; p: string; n: string };
   type: string;
-}) {
+}): Generator<any, void, any> {
   const { e, p, n } = action.payload;
   try {
     if (n.length < 3) {

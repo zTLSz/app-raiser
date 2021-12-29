@@ -32,10 +32,7 @@ export const receiveUnsubscribeUser = (data: any) => {
   };
 };
 
-export const unsubscribeUserError = (error: {
-  code: string;
-  message: string;
-}) => {
+export const unsubscribeUserError = (error: any) => {
   return {
     type: UNSUBSCRIBE_USER_FAILURE,
     payload: error.code,
@@ -52,7 +49,7 @@ interface UnsubscribeUserTypes {
 export function* sagaUnsubscribeUser(action: {
   payload: UnsubscribeUserTypes;
   type: string;
-}) {
+}): Generator<any, void, any> {
   const {
     subscribingUserId,
     subscribingUserName,

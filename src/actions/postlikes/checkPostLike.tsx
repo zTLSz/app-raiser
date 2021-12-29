@@ -1,6 +1,7 @@
 import { db } from "../../firebase/firebase";
 import { put, call, takeEvery } from "redux-saga/effects";
 import firebase from "firebase";
+import { StringifyOptions } from "querystring";
 
 export const CHECK_POST_LIKE_REQUEST = "CHECK_POST_LIKE_REQUEST";
 export const CHECK_POST_LIKE_SUCCESS = "CHECK_POST_LIKE_SUCCESS";
@@ -50,6 +51,11 @@ interface PostLikeTypes {
   likes: number;
 }
 
+interface IError {
+  code: string;
+  message: string;
+}
+
 export function* sagaCheckPostLike(action: {
   payload: PostLikeTypes;
   type: string;
@@ -62,8 +68,8 @@ export function* sagaCheckPostLike(action: {
     );
     yield call(() => checkLike(action.payload));
     yield put(receiveCheckPostLike(payload));
-  } catch (e) {
-    yield put(checkPostLikeError(e));
+  } catch (error: any) {
+    yield put(checkPostLikeError(error));
   }
 }
 

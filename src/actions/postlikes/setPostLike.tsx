@@ -36,7 +36,7 @@ export const receiveSetPostLike = (data: any) => {
   };
 };
 
-export const setPostLikeError = (error: { code: string; message: string }) => {
+export const setPostLikeError = (error: any) => {
   return {
     type: SET_POST_LIKE_FAILURE,
     payload: error.code,
@@ -56,7 +56,7 @@ interface PostLikeTypes {
 export function* sagaSetPostLike(action: {
   payload: PostLikeTypes;
   type: string;
-}) {
+}): Generator<any, void, any> {
   const { postid, authorid, authorname, userid, likes, dislikes, type } =
     action.payload;
 

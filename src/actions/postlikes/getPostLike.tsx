@@ -20,7 +20,7 @@ export const receiveGetPostLike = (data: any) => {
   };
 };
 
-export const getPostLikeError = (error: { code: string; message: string }) => {
+export const getPostLikeError = (error: any) => {
   return {
     type: GET_POST_LIKE_FAILURE,
     payload: error.code,
@@ -35,7 +35,7 @@ interface PostLikeTypes {
 export function* sagaGetPostLike(action: {
   payload: PostLikeTypes;
   type: string;
-}) {
+}): Generator<any, void, any> {
   const { postid, userid } = action.payload;
 
   try {

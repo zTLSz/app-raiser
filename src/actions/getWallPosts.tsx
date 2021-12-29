@@ -33,11 +33,7 @@ export const receiveGetWallPostsNext = (data: any) => {
   };
 };
 
-export const getWallPostsError = (error: {
-  code: string;
-  message: string;
-  a: null;
-}) => {
+export const getWallPostsError = (error: any) => {
   return {
     type: GET_WALL_POSTS_FAILURE,
     payload: error.code,

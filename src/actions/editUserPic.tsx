@@ -21,11 +21,7 @@ export const receiveEditPicProfile = (data: any, userinfo: any) => {
   };
 };
 
-export const editProfilePicError = (error: {
-  code: string;
-  message: string;
-  a: null;
-}) => {
+export const editProfilePicError = (error: any) => {
   return {
     type: USER_PIC_EDIT_FAILURE,
     payload: error.code,
@@ -35,7 +31,7 @@ export const editProfilePicError = (error: {
 export function* sagaEditProfilePicWorker(action: {
   payload: { url: string; usercounter: number };
   type: string;
-}) {
+}): Generator<any, void, any> {
   const { url, usercounter } = action.payload;
   try {
     const payload = yield call(() => editUserInfo(url, usercounter));

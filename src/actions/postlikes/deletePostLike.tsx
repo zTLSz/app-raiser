@@ -34,10 +34,7 @@ export const receiveDeletePostLike = (data: any) => {
   };
 };
 
-export const deletePostLikeError = (error: {
-  code: string;
-  message: string;
-}) => {
+export const deletePostLikeError = (error: any) => {
   return {
     type: REMOVE_POST_LIKE_FAILURE,
     payload: error.code,
@@ -56,7 +53,7 @@ interface PostLikeTypes {
 export function* sagaDeletePostLike(action: {
   payload: PostLikeTypes;
   type: string;
-}) {
+}): Generator<any, void, any> {
   const { postid, authorid, userid, likes, dislikes, currtype } =
     action.payload;
 

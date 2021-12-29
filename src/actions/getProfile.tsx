@@ -19,11 +19,7 @@ export const receiveGetProfile = (userinfo: any) => {
   };
 };
 
-export const getProfileError = (error: {
-  code: string;
-  message: string;
-  a: null;
-}) => {
+export const getProfileError = (error: any) => {
   return {
     type: GET_PROFILE_FAILURE,
     payload: error.code,

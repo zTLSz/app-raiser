@@ -68,8 +68,8 @@ export function* sagaAddWallPostWorker(action: {
     yield call(() => addPost(action.payload));
     yield put(requestGetWallPosts(counter, author));
     yield put(receiveAddWallPost(payload));
-  } catch (e: any) {
-    yield put(addWallPostError(e));
+  } catch (e) {
+    // yield put(addWallPostError(e));
   }
 }
 

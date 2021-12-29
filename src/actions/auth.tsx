@@ -51,11 +51,7 @@ export const receiveLogout = () => {
   };
 };
 
-export const logoutError = (error: {
-  code: string;
-  message: string;
-  a: null;
-}) => {
+export const logoutError = (error: any) => {
   return {
     type: LOGOUT_FAILURE,
     payload: error.code,
@@ -63,7 +59,6 @@ export const logoutError = (error: {
 };
 
 export const verifyRequest = () => {
-  console.log("STAARTED22222222222222231231321");
   return {
     type: VERIFY_REQUEST,
   };
@@ -75,11 +70,7 @@ export const verifySuccess = () => {
   };
 };
 
-export const verifyError = (error: {
-  code: string;
-  message: string;
-  a: null;
-}) => {
+export const verifyError = (error: any) => {
   return {
     type: VERIFY_FAILURE,
     payload: error.code,
@@ -107,8 +98,8 @@ export function* sagaLoginWorker(action: {
     );
 
     yield put(receiveLogin(payload, usersystemdata.usercounter, userinfo));
-  } catch (e) {
-    yield put(loginError(e));
+  } catch (error) {
+    // yield put(loginError(error));
   }
 }
 

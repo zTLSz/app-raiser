@@ -26,10 +26,7 @@ export const receiveCheckSubscribeUser = (data: any) => {
   };
 };
 
-export const checkSubscribeUserError = (error: {
-  code: string;
-  message: string;
-}) => {
+export const checkSubscribeUserError = (error: any) => {
   return {
     type: CHECK_SUBSCRIBE_USER_FAILURE,
     payload: error.code,

@@ -21,11 +21,7 @@ export const receiveEditProfile = (data: any, userinfo: any) => {
   };
 };
 
-export const editProfileError = (error: {
-  code: string;
-  message: string;
-  a: null;
-}) => {
+export const editProfileError = (error: any) => {
   return {
     type: USER_EDIT_FAILURE,
     payload: error.code,
