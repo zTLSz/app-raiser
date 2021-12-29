@@ -1,6 +1,6 @@
 import { createStore, compose, applyMiddleware } from "redux";
 import { rootReducer } from "../reducers";
-import { verifyRequest } from "../actions/auth";
+import { verifyRequest } from "../actions/auth/auth";
 import createSagaMiddleware from "redux-saga";
 import logger from "redux-logger";
 import { rootSaga } from "../actions/saga/root";

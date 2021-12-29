@@ -3,7 +3,7 @@ import {
   GET_WALL_POSTS_SUCCESS,
   GET_WALL_POSTS_SUCCESS_NEXT,
   GET_WALL_POSTS_FAILURE,
-} from "../actions/getWallPosts";
+} from "../actions/wall/getWallPosts";
 
 const initialState = {
   isLoading: false,

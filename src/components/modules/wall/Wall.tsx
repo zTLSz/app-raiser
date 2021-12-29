@@ -6,7 +6,7 @@ import AddPost from "./AddPost";
 import { GetWallTypes } from "../../../reducers/getwallposts";
 import { AddWallTypes } from "../../../reducers/addwallpost";
 import { Layout, Typography, Skeleton, Button } from "antd";
-import { requestGetWallPosts } from "../../../actions/getWallPosts";
+import { requestGetWallPosts } from "../../../actions/wall/getWallPosts";
 
 const { Title, Text } = Typography;
 

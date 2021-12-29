@@ -2,9 +2,9 @@ import { db } from "../../firebase/firebase";
 import { put, call, takeEvery } from "redux-saga/effects";
 import firebase from "firebase";
 import { requestCheckSubscribeUser } from "./chechSubscribeUser";
-import { requestGetProfile } from "../getProfile";
-import { verifyRequest } from "../auth";
-import { getCurrentUserInfo } from "../getCurrentUserInfo";
+import { requestGetProfile } from "../profile/getProfile";
+import { verifyRequest } from "../auth/auth";
+import { getCurrentUserInfo } from "../profile/getCurrentUserInfo";
 
 export const SUBSCRIBE_USER_REQUEST = "SUBSCRIBE_USER_REQUEST";
 export const SUBSCRIBE_USER_SUCCESS = "SUBSCRIBE_USER_SUCCESS";

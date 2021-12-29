@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetWallTypes } from "../../../reducers/getwallposts";
 import { AddWallTypes } from "../../../reducers/addwallpost";
 import { Layout, Typography, Button, Input } from "antd";
-import { requestAddWallPost } from "../../../actions/addwallpost";
+import { requestAddWallPost } from "../../../actions/wall/addwallpost";
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;

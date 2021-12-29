@@ -8,10 +8,10 @@ import {
   VERIFY_REQUEST,
   VERIFY_SUCCESS,
   VERIFY_FAILURE,
-} from "../actions/auth";
+} from "../actions/auth/auth";
 
-import { USER_EDIT_SUCCESS } from "../actions/editProfile";
-import { USER_PIC_EDIT_SUCCESS } from "../actions/editUserPic";
+import { USER_EDIT_SUCCESS } from "../actions/profile/editProfile";
+import { USER_PIC_EDIT_SUCCESS } from "../actions/profile/editUserPic";
 
 export interface AuthTypes {
   isLoggingIn: boolean;

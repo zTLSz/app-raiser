@@ -1,4 +1,4 @@
-import { db } from "../firebase/firebase";
+import { db } from "../../firebase/firebase";
 import { put, call } from "redux-saga/effects";
 import { getCurrentUserInfo } from "./getCurrentUserInfo";
 

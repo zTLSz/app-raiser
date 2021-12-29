@@ -2,7 +2,7 @@ import {
   ADD_WALL_POST_REQUEST,
   ADD_WALL_POST_SUCCESS,
   ADD_WALL_POST_FAILURE,
-} from "../actions/addwallpost";
+} from "../actions/wall/addwallpost";
 
 const initialState = {
   isLoading: false,

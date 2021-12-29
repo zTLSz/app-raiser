@@ -2,7 +2,7 @@ import {
   GET_PROFILE_REQUEST,
   GET_PROFILE_FAILURE,
   GET_PROFILE_SUCCESS,
-} from "../actions/getProfile";
+} from "../actions/profile/getProfile";
 import { InfoTypes } from "./authreducer";
 
 const initialState = {

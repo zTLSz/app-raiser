@@ -2,7 +2,7 @@ import { db } from "../../firebase/firebase";
 import { put, call, takeEvery } from "redux-saga/effects";
 import firebase from "firebase";
 import { requestCheckSubscribeUser } from "./chechSubscribeUser";
-import { requestGetProfile } from "../getProfile";
+import { requestGetProfile } from "../profile/getProfile";
 
 export const UNSUBSCRIBE_USER_REQUEST = "UNSUBSCRIBE_USER_REQUEST";
 export const UNSUBSCRIBE_USER_SUCCESS = "UNSUBSCRIBE_USER_SUCCESS";

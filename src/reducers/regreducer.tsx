@@ -3,7 +3,7 @@ import {
   REG_SUCCESS,
   REG_FAILURE,
   REG_REDIRECT,
-} from "../actions/reg";
+} from "../actions/auth/reg";
 
 const initialState = {
   isReg: false,

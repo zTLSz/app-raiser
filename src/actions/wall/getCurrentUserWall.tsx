@@ -1,5 +1,5 @@
 import { TrophyOutlined } from "@ant-design/icons";
-import { db } from "../firebase/firebase";
+import { db } from "../../firebase/firebase";
 
 export async function getCurrentUserWall(
   usercounter: number,

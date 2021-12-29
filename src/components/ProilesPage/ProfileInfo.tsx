@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ProfileDataTypes } from "../../reducers/getprofilereducer";
 import { SubscribeUserTypes } from "../../reducers/subscribeuserreducer";
 import { AuthTypes } from "../../reducers/authreducer";
-import { requestGetProfile } from "../../actions/getProfile";
+import { requestGetProfile } from "../../actions/profile/getProfile";
 import { requestSubscribeUser } from "../../actions/subscribe/subscribeUser";
 import { requestCheckSubscribeUser } from "../../actions/subscribe/chechSubscribeUser";
 import { requestUnsubscribeUser } from "../../actions/subscribe/unsubscribeUser";

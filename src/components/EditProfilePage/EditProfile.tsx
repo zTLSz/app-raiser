@@ -5,7 +5,7 @@ import { Layout, Row, Col, Typography, Button, Input } from "antd";
 import { AuthTypes } from "../../reducers/authreducer";
 import { UserEditTypes } from "../../reducers/editprofilereducer";
 import TopMenu from "../TopMenu/TopmenuWrap";
-import { requestEditProfile } from "../../actions/editProfile";
+import { requestEditProfile } from "../../actions/profile/editProfile";
 import EditUserPic from "./EditPic";
 
 const { Title, Text } = Typography;

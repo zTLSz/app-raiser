@@ -1,5 +1,5 @@
 import { takeEvery } from "redux-saga/effects";
-import { sagaRegWorker, REG_REQUEST } from "../reg";
+import { sagaRegWorker, REG_REQUEST } from "../auth/reg";
 import {
   sagaLoginWorker,
   LOGIN_REQUEST,
@@ -7,18 +7,27 @@ import {
   VERIFY_REQUEST,
   sagaLogoutWorker,
   LOGOUT_REQUEST,
-} from "../auth";
-import { sagaEditProfileWorker, USER_EDIT_REQUEST } from "../editProfile";
+} from "../auth/auth";
+import {
+  sagaEditProfileWorker,
+  USER_EDIT_REQUEST,
+} from "../profile/editProfile";
 import {
   sagaEditProfilePicWorker,
   USER_PIC_EDIT_REQUEST,
-} from "../editUserPic";
-import { sagaGetProfileWorker, GET_PROFILE_REQUEST } from "../getProfile";
-import { sagaAddWallPostWorker, ADD_WALL_POST_REQUEST } from "../addwallpost";
+} from "../profile/editUserPic";
+import {
+  sagaGetProfileWorker,
+  GET_PROFILE_REQUEST,
+} from "../profile/getProfile";
+import {
+  sagaAddWallPostWorker,
+  ADD_WALL_POST_REQUEST,
+} from "../wall/addwallpost";
 import {
   sagaGetWallPostsWorker,
   GET_WALL_POSTS_REQUEST,
-} from "../getWallPosts";
+} from "../wall/getWallPosts";
 import {
   sagaSetPostLike,
   SET_POST_LIKE_REQUEST,

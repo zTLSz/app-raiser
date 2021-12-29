@@ -6,7 +6,7 @@ import { Redirect, Link } from "react-router-dom";
 import { Form, Input, Checkbox, Button, Typography, Row, Col } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { requestLogin } from "../../actions/auth";
+import { requestLogin } from "../../actions/auth/auth";
 import { AuthTypes } from "../../reducers/authreducer";
 import bg from "../../images/bglog.jpg";
 

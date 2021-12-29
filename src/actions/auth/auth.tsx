@@ -1,6 +1,6 @@
-import { myFirebase, db } from "../firebase/firebase";
+import { myFirebase, db } from "../../firebase/firebase";
 import { put, call } from "redux-saga/effects";
-import { getCurrentUserInfo } from "./getCurrentUserInfo";
+import { getCurrentUserInfo } from "../profile/getCurrentUserInfo";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";

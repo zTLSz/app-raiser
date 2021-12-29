@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { keyframes } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import { requestReg } from "../../actions/reg";
+import { requestReg } from "../../actions/auth/reg";
 import { Form, Input, Checkbox, Button, Typography, Row, Col } from "antd";
 import bg from "../../images/bglog.jpg";
 

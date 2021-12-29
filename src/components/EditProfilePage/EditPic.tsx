@@ -5,7 +5,7 @@ import { Layout, Col, Typography, Button, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { AuthTypes } from "../../reducers/authreducer";
 import { PicEditTypes } from "../../reducers/editprofilepicreducer";
-import { requestEditPicProfile } from "../../actions/editUserPic";
+import { requestEditPicProfile } from "../../actions/profile/editUserPic";
 import { storageRef } from "../../firebase/firebase";
 
 const { Title, Text } = Typography;

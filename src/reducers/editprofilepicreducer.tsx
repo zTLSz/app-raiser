@@ -2,7 +2,7 @@ import {
   USER_PIC_EDIT_REQUEST,
   USER_PIC_EDIT_FAILURE,
   USER_PIC_EDIT_SUCCESS,
-} from "../actions/editUserPic";
+} from "../actions/profile/editUserPic";
 
 const initialState = {
   isEdit: false,

@@ -2,7 +2,7 @@ import {
   USER_EDIT_REQUEST,
   USER_EDIT_FAILURE,
   USER_EDIT_SUCCESS,
-} from "../actions/editProfile";
+} from "../actions/profile/editProfile";
 
 const initialState = {
   isEdit: false,

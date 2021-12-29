@@ -9,7 +9,7 @@ import ProfilesPage from "./components/ProilesPage/Profiles";
 import LcPage from "./components/LikesCommentsPage/Lpage";
 import Preloader from "./components/Preloader";
 import ProtectedRoute from "./containers/ProtectedRoute";
-import { verifyRequest } from "./actions/auth";
+import { verifyRequest } from "./actions/auth/auth";
 import { Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 

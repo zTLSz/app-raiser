@@ -1,4 +1,4 @@
-import { myFirebase, db } from "../firebase/firebase";
+import { myFirebase, db } from "../../firebase/firebase";
 import { put, call } from "redux-saga/effects";
 import firebase from "firebase";
 
