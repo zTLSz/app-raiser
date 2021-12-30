@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import TopMenu from "../TopMenu/TopmenuWrap";
+import TopMenu from "../modules/topMenu/TopmenuWrap";
 import { ProfileDataTypes } from "../../reducers/getprofilereducer";
 import { SubscribeUserTypes } from "../../reducers/subscribeuserreducer";
 import { AuthTypes } from "../../reducers/authreducer";

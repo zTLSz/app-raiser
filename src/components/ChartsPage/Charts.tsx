@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { requestLogout } from "../../actions/auth/auth";
-import TopMenu from "../TopMenu/TopmenuWrap";
+import TopMenu from "../modules/topMenu/TopmenuWrap";
 
 interface ChartsPageTypes {}
 

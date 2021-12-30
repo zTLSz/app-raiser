@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { Layout, Row, Col, Typography, Button, Input } from "antd";
 import { requestGetSubscribersList } from "../../actions/subscribe/getSubscribersList";
-import TopMenu from "../TopMenu/TopmenuWrap";
+import TopMenu from "../modules/topMenu/TopmenuWrap";
 
 const { Title, Text } = Typography;
 const { Content } = Layout;

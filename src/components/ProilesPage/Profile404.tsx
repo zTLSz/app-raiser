@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import TopMenu from "../TopMenu/TopmenuWrap";
+import TopMenu from "../modules/topMenu/TopmenuWrap";
 import { Layout, Row, Col, Typography } from "antd";
 
 const { Title, Text } = Typography;

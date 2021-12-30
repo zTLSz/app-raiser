@@ -10,7 +10,7 @@ import {
   ProfileFilled,
   BlockOutlined,
 } from "@ant-design/icons";
-import { requestLogout } from "../../actions/auth/auth";
+import { requestLogout } from "../../../actions/auth/auth";
 import { Link } from "react-router-dom";
 
 const { SubMenu } = Menu;
