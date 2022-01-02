@@ -48,21 +48,27 @@ const LcPage: React.FC<LCPageTypes> = () => {
   const params: any = useParams();
   const likeslist = useSelector((state: LikeState) => state.likeslist);
   const userCounter = useSelector((state: LikeState) => state.auth.counter);
-  let likes = "",
-    dislikes = "";
+  const [likes, setLikes] = useState([]);
+  const [dislikes, setDislikes] = useState([]);
 
   useEffect(() => {
     dispatch(requestGetPostLike(params.id, params.u));
   }, []);
 
-  if (likeslist.data.length > 0) {
-    likes = likeslist.data
-      .filter((item: any) => item.type === "LIKE")
-      .map((item: any, i: number) => <ProfileLink key={i} item={item} />);
-    dislikes = likeslist.data
-      .filter((item: any) => item.type === "DISLIKE")
-      .map((item: any, i: number) => <ProfileLink key={i} item={item} />);
-  }
+  useEffect(() => {
+    if (likeslist.data.length > 0) {
+      const sortedLikes = likeslist.data
+        .filter((item: any) => item.type === "LIKE")
+        .map((item: any, i: number) => <ProfileLink key={i} item={item} />);
+
+      const sortedDisikes = likeslist.data
+        .filter((item: any) => item.type === "DISLIKE")
+        .map((item: any, i: number) => <ProfileLink key={i} item={item} />);
+
+      setLikes(sortedLikes);
+      setDislikes(sortedDisikes);
+    }
+  }, [likeslist]);
 
   return (
     <div>

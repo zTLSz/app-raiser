@@ -14,7 +14,7 @@ const initialState = {
 export interface SubscribeUserTypes {
   isError: boolean;
   isLoading: boolean;
-  data: any[];
+  data: any;
   errorCode: string | number;
 }
 
